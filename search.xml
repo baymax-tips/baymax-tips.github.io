@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Docker入门系列 1. Docker简介</title>
+      <link href="/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/"/>
+      <url>/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/</url>
+      
+        <content type="html"><![CDATA[<p>&emsp;&emsp;本系列笔记是作为一个新手小白，从了解 Docker 是什么、Docker 技术包含哪些概念到上手使用、安装以及发布 Docker 镜像的整个过程。小白在学习过程中遵循简介、入门、上手到深入的顺序，根据个人学习实践过程进行书写与记录。</p><h2 id="一、-Docker-简介"><a href="#一、-Docker-简介" class="headerlink" title="一、 Docker 简介"></a>一、 Docker 简介</h2><p>&emsp;&emsp;Docker是DotCloud开源的、可以将任何应用包装在Linux container中运行的工具。Docker是供开发人员和系统管理员：使用容器构建，运行和共享应用程序的平台。使用容器来部署应用程序称为容器化。容器不是新的技术，但用于轻松部署应用程序的Docker却是新的未来。</p><h3 id="1-容器的概念"><a href="#1-容器的概念" class="headerlink" title="1. 容器的概念"></a>1. 容器的概念</h3><p>&emsp;&emsp;<strong>Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。</strong>它是目前最流行的 Linux 容器解决方案。而 Linux 容器是 Linux 发展出了另一种虚拟化技术，简单来讲， Linux 容器不是模拟一个完整的操作系统，而是对进程进行隔离，相当于是在正常进程的外面套了一个保护层。对于容器里面的进程来说，它接触到的各种资源都是虚拟的，从而实现与底层系统的隔离。</p><p>&emsp;&emsp;<strong><code>Docker</code> 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个<code>虚拟容器</code>里运行，就好像在真实的物理机上运行一样。有了 <code>Docker</code> ，就不用担心环境问题。</strong></p><p>&emsp;&emsp;<code>Docker</code> 利用 Linux 核心中的资源分脱机制，例如 <code>cgroups</code>，以及 Linux 核心名字空间（name space），来创建独立的软件容器（<code>containers</code>），属于<strong>操作系统层面的虚拟化</strong>技术。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。<code>Docker</code> 在容器的基础上进行了进一步的封装，从文件系统、网络互联到进程隔离等等，极大的简化了容器的创建和维护，使得其比虚拟机技术更为轻便、快捷。<code>Docker</code> 可以在单一 Linux 实体下运作，避免因为创建一个虚拟机而造成的额外负担。</p><p>容器化越来越受欢迎，因为容器具有一下有点:</p><blockquote><ul><li>灵活：即使最复杂的也可以容器化。</li><li>轻量级：容器利用并共享主机内核，在系统资源方面比虚拟机效率更高。</li><li>可移植性：您可以在本地构建，部署到云并在任何地方运行。</li><li>松散耦合：容器是高度自给自足并封装的容器，使您可以在不破坏其他容器的情况下更换或升级它们。</li><li>可扩展：您可以在数据中心内增加并自动分布容器副本。</li><li>安全：容器将积极的约束和隔离应用于流程，而无需用户方面的任何配置。</li></ul></blockquote><h3 id="2-容器和虚拟机"><a href="#2-容器和虚拟机" class="headerlink" title="2. 容器和虚拟机"></a>2. 容器和虚拟机</h3><p>容器在Linux上本地运行，并与其他容器共享主机的内核。它运行一个离散进程，不占用任何其他可执行文件更多的内存，从而使其轻巧。由于容器是进程级别的，相比虚拟机有很多优势</p><p>相比之下，虚拟机（VM）就是带环境安装的一种解决方案。它可以在一种操作系统里面运行另一种操作系统，比如在 Windows 系统里面运行 Linux 系统。并通过虚拟机管理程序对主机资源进行虚拟访问。通常，VM会产生大量开销，超出了应用程序逻辑所消耗的开销。</p><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589358055/hexo/Container_kgmlbw.png" alt="容器技术"></td><td><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589358057/hexo/VM_ioupe2.png" alt="虚拟机"></td></tr></tbody></table><h4 id="容器技术"><a href="#容器技术" class="headerlink" title="容器技术"></a>容器技术</h4><p>容器技术是和我们的宿主机共享硬件资源及操作系统，可以实现资源的动态分配。容器包含应用和其所有的依赖包，但是与其他容器共享内核。容器在宿主机操作系统中，在用户空间以分离的进程运行。容器内没有自己的内核，也没有进行硬件虚拟。</p><h4 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h4><p>对于虚拟机技术来说，传统虚拟机如 VMware ， VisualBox 之类的需要模拟整台机器包括硬件，每台虚拟机都需要有自己的操作系统，虚拟机一旦被开启，预分配给它的资源将全部被占用。每一台虚拟机包括应用，必要的二进制和库，以及一个完整的用户操作系统。</p><blockquote><p>容器技术是实现操作系统虚拟化的一种途径，可以让您在资源受到隔离的进程中运行应用程序及其依赖关系。通过使用容器，我们可以轻松打包应用程序的代码、配置和依赖关系，将其变成容易使用的构建块，从而实现环境一致性、运营效率、开发人员生产力和版本控制等诸多目标。容器可以帮助保证应用程序快速、可靠、一致地部署，其间不受部署环境的影响。容器还赋予我们对资源更多的精细化控制能力，让我们的基础设施效率更高。通过上面这幅图我们可以很直观的反映出这两者的区别所在。</p></blockquote><p><strong>具体来说与虚拟机技术对比，Docker 容器存在以下几个特点：</strong></p><p>&emsp;&emsp;<strong>1. 更快的启动速度：</strong> 因为 Docker 直接运行于宿主内核，无需启动完整的操作系统，因此启动速度属于秒级别，而虚拟机通常需要几分钟去启动。</p><p>&emsp;&emsp;<strong>2. 更高效的资源利用率：</strong>由于容器不需要进行硬件虚拟以及运行完整操作系统等额外开销，Docker 对系统资源的利用率更高。</p><p>&emsp;&emsp;<strong>3. 更高的系统支持量：</strong>Docker 的架构可以共用一个内核与共享应用程序库，所占内存极小。同样的硬件环境，Docker 运行的镜像数远多于虚拟机数量，对系统的利用率非常高。</p><p>&emsp;&emsp;<strong>4. 持续交付与部署：</strong>对开发和运维人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 Dockerfile 来进行镜像构建，并进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至进行自动部署。</p><p>&emsp;&emsp;<strong>5. 更轻松的迁移：</strong>由于 Docker 确保了执行环境的一致性，使得应用的迁移更加容易。Docker 可以在很多平台上运行，无论是物理机、虚拟机、公有云、私有云，甚至是笔记本，其运行结果是一致的。因此用户可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。</p><p>&emsp;&emsp;<strong>6. 更轻松的维护与扩展：</strong>Docker 使用的分层存储以及镜像的技术，使得应用重复部分的复用更为容易，也使得应用的维护更新更加简单，基于基础镜像进一步扩展镜像也变得非常简单。此外，Docker 团队同各个开源项目团队一起维护了一大批高质量的 官方镜像，既可以直接在生产环境使用，又可以作为基础进一步定制，大大的降低了应用服务的镜像制作成本。</p><p>&emsp;&emsp;<strong>7. 更弱的隔离性：</strong>Docker 属于进程之间的隔离，虚拟机可实现系统级别隔离。</p><p>&emsp;&emsp;<strong>8. 更弱的安全性：</strong>Docker 的租户 root 和宿主机 root 等同，一旦容器内的用户从普通用户权限提升为 root 权限，它就直接具备了宿主机的 root 权限，进而可进行无限制的操作。虚拟机租户 root 权限和宿主机的 root 虚拟机权限是分离的，并且利用硬件隔离技术可以防止虚拟机突破和彼此交互，而容器至今还没有任何形式的硬件隔离，这使得容器容易受到攻击。</p><h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3><p>Docker 的主要用途，目前有三大类。</p><p>（1）提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。</p><p>（2）提供弹性的云服务。因为 Docker 容器可以随开随关，很适合动态扩容和缩容。</p><p>（3）组建微服务架构。通过多个容器，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 容器服务 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> 容器服务 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在Docker 中运行 OpenWrt 旁路网关</title>
       <link href="/2020/05/09/zai-docker-zhong-yun-xing-openwrt-pang-lu-wang-guan/"/>
       <url>/2020/05/09/zai-docker-zhong-yun-xing-openwrt-pang-lu-wang-guan/</url>
@@ -20,13 +47,13 @@
       
         <tags>
             
+            <tag> Docker </tag>
+            
             <tag> openwrt </tag>
             
             <tag> 旁路由 </tag>
             
             <tag> 透明网关 </tag>
-            
-            <tag> Docker </tag>
             
             <tag> 科学上网 </tag>
             
