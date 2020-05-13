@@ -521,10 +521,53 @@
 <p>&emsp;&emsp;<strong>6. 更轻松的维护与扩展：</strong>Docker 使用的分层存储以及镜像的技术，使得应用重复部分的复用更为容易，也使得应用的维护更新更加简单，基于基础镜像进一步扩展镜像也变得非常简单。此外，Docker 团队同各个开源项目团队一起维护了一大批高质量的 官方镜像，既可以直接在生产环境使用，又可以作为基础进一步定制，大大的降低了应用服务的镜像制作成本。</p>
 <p>&emsp;&emsp;<strong>7. 更弱的隔离性：</strong>Docker 属于进程之间的隔离，虚拟机可实现系统级别隔离。</p>
 <p>&emsp;&emsp;<strong>8. 更弱的安全性：</strong>Docker 的租户 root 和宿主机 root 等同，一旦容器内的用户从普通用户权限提升为 root 权限，它就直接具备了宿主机的 root 权限，进而可进行无限制的操作。虚拟机租户 root 权限和宿主机的 root 虚拟机权限是分离的，并且利用硬件隔离技术可以防止虚拟机突破和彼此交互，而容器至今还没有任何形式的硬件隔离，这使得容器容易受到攻击。</p>
-<h3 id="3-Docker的用途"><a href="#3-Docker的用途" class="headerlink" title="3. Docker的用途"></a>3. Docker的用途</h3><p>&emsp;&emsp;Docker 的主要用途，目前有三大类。</p>
+<h3 id="3-Docker的用途"><a href="#3-Docker的用途" class="headerlink" title="3. Docker的用途"></a>3. Docker的用途</h3><p>&emsp;&emsp;<code>Docker</code> 的主要用途，目前有三大类。</p>
 <p>&emsp;&emsp;（1）提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。</p>
 <p>&emsp;&emsp;（2）提供弹性的云服务。因为 Docker 容器可以随开随关，很适合动态扩容和缩容。</p>
 <p>&emsp;&emsp;（3）组建微服务架构。通过多个容器，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。</p>
+<h3 id="4-容器编排"><a href="#4-容器编排" class="headerlink" title="4. 容器编排"></a>4. 容器编排</h3><p><code>Docker</code>平台以及周边生态系统包含很多工具来管理容器的生命周期。<br>&emsp;&emsp;例如，<strong>Docker Command Line Interface(CLI)支持下面的容器活动:</strong></p>
+<p>&emsp;&emsp; - 从注册表中拉取仓库。<br>&emsp;&emsp; - 运行容器并可选的附加一个终端给它。<br>&emsp;&emsp; - 将容器提交新镜像。<br>&emsp;&emsp; - 上传镜像到注册中心。<br>&emsp;&emsp; - 终止运行中的容器。</p>
+<p><strong>Docker Command Line Interface(CLI) 满足在单个主机上管理容器的需求，但是面对部署在多个主机上的容器时就无所适从了。为了超越单个容器管理，我们必须转向编排工具。<code>容器编排工具</code>将生命周期管理能力扩展到部署在大量机器集群上部署的复杂的、多容器工作负载。通过抽象主机基础结构， 编排工具允许用户将整个集群视为单个部署目标。</strong></p>
+<blockquote>
+<p><strong>容器编排工具</strong> 提供调度和集群的技术，提供用于基于容器应用可扩展性的基本机制。这些工具使用容器服务，并编排他们以决定容器之间如何进行交互。此外，编排允许容器可以存在并执行在集群上，这使得他们能够扩展来适应增加的处理负荷。</p>
+</blockquote>
+<p>&emsp;&emsp;典型的容器编排工具有助于虚拟化一组机器并将它们作为单个集群管理。容器编排工具也有助于将机器上的工作负载或容器移动到消费者透明的位置。很多工具目前既支持基于DOCKER的容器，也支持非容器化二进制文件部署，例如独立的Spring Boot应用程序。这些容器编排工具的基本功能是从应用程序中抽象出实际的服务器实例。</p>
+<blockquote>
+<p><strong>容器编排工具</strong> 为开发人员和基础设施团队提供了一个抽象层来处理大规模的容器化部署。<code>容器编排工具</code>提供的特征在众多提供者之间有所不同，然而常见的公共特征包含准备、发现、资源管理、监视和部署。</p>
+</blockquote>
+<p><strong>容器编排工具的一些关键能力概括如下：</strong></p>
+<ul>
+<li><strong>集群管理：</strong>将虚拟机和物理机器的集群管理为一台大型机器。这些机器在资源能力方面可能有些差异，但大体上都是以Linux作为操作系统的机器。这些虚拟集群可以建立在云上、本地或两者的混合。</li>
+<li><strong>部署：</strong>能处理有大量机器的应用程序和容器的自动部署。支持多个版本的应用程序容器，并且还支持跨越大量集群机器的滚动升级。这些工具还能够处理故障回滚。</li>
+<li><strong>可伸缩性：</strong>支持应用实例的自动和手动伸缩，以性能优化为主要目标。</li>
+<li><strong>健康：</strong>它管理集群、节点和应用程序的健康。可以从集群中移除异常的机器和应用程序实例。</li>
+<li><strong>基础结构抽象化：</strong>开发人员不必担心机器、容量等问题。完全是容器编排工具来决定如何调度和运行应用程序。这些工具也抽象化机器的细节、能力、使用和位置。对于应用程序所有者来说，它们相当于一个容量几乎无限的大型机器。</li>
+<li><strong>资源优化：</strong>这些工具以有效的方式在一组可用机器上分配容器工作负载，从而降低成本，通过从简单的到复杂的算法可有效地提高利用率。</li>
+<li><strong>资源分配：</strong>基于应用程序开发人员设置的资源可用性和约束来分配服务器。资源分配将基于约束、规则、端口要求、应用依赖性、健康等等。</li>
+<li><strong>服务可用性：</strong>确保服务在集群中正常运行。在机器故障的情况下，容器编排会自动通过在集群中的其他机器上重新启动这些服务来处理故障。</li>
+<li><strong>敏捷性：</strong>敏捷性工具能够快速分配工作负载到可用资源，或者在资源需求发生变化时跨机器移动工作量。此外，可以根据业务临界性、业务优先级等来设置约束重新调整资源。</li>
+<li><strong>隔离：</strong>一些工具提供了资源隔离。因此，即使应用程序不是容器化的，也可以实现资源隔离。</li>
+</ul>
+<h3 id="5-编排工具"><a href="#5-编排工具" class="headerlink" title="5. 编排工具"></a>5. 编排工具</h3><h4 id="1-Kubernetes"><a href="#1-Kubernetes" class="headerlink" title="1) Kubernetes"></a>1) Kubernetes</h4><p>&emsp;&emsp;Kubernetes是一个开源的，开箱即用的容器集群管理器和业务流程。它具有出色的构建 调度器 和资源管理器，用于以更有效和高度可用的方式部署容器。Kubernetes已成为许多组织事实上的容器编排工具。kubernetes项目由google与世界各地的贡献者维护。它提供了本机Docker工具不提供的许多功能。而且，使用kubernetes很容易上手。</p>
+<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374109/hexo/kubernetes_yxk3g7.jpg" alt="Kubernetes"></p>
+<h4 id="2-OpenShift"><a href="#2-OpenShift" class="headerlink" title="2) OpenShift"></a>2) OpenShift</h4><p>&emsp;&emsp;Openshift建立在kubernetes之上。Openshift项目由Redhat维护。它同时具有开源（openshift orgin）和企业版（openshift容器平台）。连同核心的Kubernetes功能，它提供了用于容器管理和编排的开箱即用组件。<br><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374123/hexo/OpenShift_rfa8hh.jpg" alt="OpenShift"></p>
+<h4 id="3-Docker-Swarm"><a href="#3-Docker-Swarm" class="headerlink" title="3) Docker Swarm"></a>3) Docker Swarm</h4><p>&emsp;&emsp;Docker生态系统包括从开发到生产部署框架的工具。在该列表中，docker swarm适用于集群管理。可以使用docker-compose，swarm，overlay网络和良好的服务发现工具（例如etcd或consul）的组合来管理Docker容器集群。</p>
+<p>与其他开源容器集群管理工具相比，Docker swarm在功能方面仍日趋成熟。考虑到庞大的Docker贡献者，Docker swarm拥有其他工具拥有的所有最佳功能不会太久。Docker记录了在生产中使用docker swarm 的良好生产计划。</p>
+<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374125/hexo/Swarm_fbtool.jpg" alt="Docker Swarm"></p>
+<h4 id="4-Mesos"><a href="#4-Mesos" class="headerlink" title="4) Mesos"></a>4) Mesos</h4><p>&emsp;&emsp;Mesos是另一个可以非常有效地管理容器编排的群集管理工具。它是由Twitter为其基础架构创建的，然后获得了开源。它已被eBay，Airbnb等公司使用。Mesos并不是用于容器的专用工具，</p>
+<p>Mesos不是用于容器的专用工具，相反，您可以将其用于VM或物理机群集，以运行容器以外的工作负载（大数据等）。它具有一个称为Marathon的有效框架，用于在Mesos群集上部署和管理容器。<br><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374127/hexo/Mesos_xjlyvv.jpg" alt="Mesos"></p>
+<h3 id="6-服务网格"><a href="#6-服务网格" class="headerlink" title="6. 服务网格"></a>6. 服务网格</h3><p>&emsp;&emsp;容器和容器编排技术的兴起使得新的基础架构成为了可能，使我们能够摆脱服务发现/负载平衡/断路器框架的束缚。 这个新的基础设施就是“服务网格”，那服务网格是什么呢？</p>
+<blockquote>
+<p><strong>服务网格</strong> 是一个<code>基础架构层</code> - 主要是一个代理集合，每个逻辑服务都有一个代理 - 与Docker Swarm或Kubernetes等容器编排解决方案集成，并提供服务发现，负载平衡，断路器，故障注入，安全，监控，跟踪以及更多以非侵入性的方式提供的开箱即用功能。</p>
+</blockquote>
+<p>由于服务网格在容器级别运行，它并不关心使用什么技术或编程语言来编写微服务。 你可以将微服务使用Java，C ++，Rust，Go，NodeJS来编写简单HTTP服务器，这些都已不再重要。</p>
+<p>可以将服务网格有效地视为分布式容器化应用基础架构级的面向切面编程。 服务网格中的代理就像AOP中的一个切面。 它们包裹了一个容器化的微服务，就像AspectJ切面可以包裹和测试java方法一样，通过分离横切关注点来简化系统。</p>
+<p>在服务网格中，请求将通过所在基础架构层中的代理在微服务之间路由。正因如此，构成服务网格的各个代理有时也被称为“sidecar”（边车），这是因为它们与每个服务并行运行，而非在内部运行。总之，这些“sidecar”代理（与每项服务分离）构成了网格式网络。</p>
+<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589376166/hexo/sidecar_ce6pve.png" alt="sidecar"></p>
+<p>服务网格是如何实现的呢？它通常会为每个服务实例提供一个称为边车（sidecar）的代理实例。这些边车会处理服务间的通信，监控和安全相关的问题， 以及任何可以从各个服务中抽象出来的东西。这样，开发人员就可以专注于服务中应用程序代码的开发，支持和维护，而运维团队可以负责维护服务网格以及运行应用程序。</p>
+<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589376932/hexo/contrl_plane_kuexpi.png" alt="contrl plane"></p>
+<p>服务网格应用中管理实例之间的网络流量的的部分称为数据平面。另外有一个独立的控制平面负责生成和部署数据平面的配置（这个配置可以控制数据平面的行为）。控制平面通常包含（或被设计为连接到）一个API，命令行界面和用于管理App的图形用户界面。</p>
+<p><strong>Sidecar 设计模式已经越来越受欢迎，并在社区内得到更广泛的采用。构建具有高度可扩展性、弹性、安全性和可观察性的微服务架构具有挑战性。Service Mesh 架构的发展已经改变了游戏规则。它降低了与微服务架构相关的复杂性，并提供了许多功能，如负载平衡、服务发现、流量管理、熔断、遥测、故障注入等。</strong></p>
 
             </div>
             <hr/>
