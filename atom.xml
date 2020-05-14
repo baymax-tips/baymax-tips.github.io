@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://baymax-trips.github.io/"/>
-  <updated>2020-05-13T13:53:49.294Z</updated>
+  <updated>2020-05-14T06:57:10.943Z</updated>
   <id>http://baymax-trips.github.io/</id>
   
   <author>
@@ -21,13 +21,27 @@
     <link href="http://baymax-trips.github.io/2020/05/13/docker-ru-men-xi-lie-2-docker-ji-ben-gai-nian-he-an-zhuang-shi-yong/"/>
     <id>http://baymax-trips.github.io/2020/05/13/docker-ru-men-xi-lie-2-docker-ji-ben-gai-nian-he-an-zhuang-shi-yong/</id>
     <published>2020-05-13T13:43:34.000Z</published>
-    <updated>2020-05-13T13:53:49.294Z</updated>
+    <updated>2020-05-14T06:57:10.943Z</updated>
     
     <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、-核心概念：镜像、容器与仓库&quot;&gt;&lt;a href=&quot;#一、-核心概念：镜像、容器与仓库&quot; class=&quot;headerlink&quot; title=&quot;一、 核心概念：镜像、容器与仓库&quot;&gt;&lt;/a&gt;一、 核心概念：镜像、容器与仓库&lt;/h2&gt;&lt;p&gt;Docker
+        
+      
     
     </summary>
     
     
+      <category term="容器服务" scheme="http://baymax-trips.github.io/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="http://baymax-trips.github.io/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="http://baymax-trips.github.io/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
     
   </entry>
   
@@ -36,7 +50,7 @@
     <link href="http://baymax-trips.github.io/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/"/>
     <id>http://baymax-trips.github.io/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/</id>
     <published>2020-05-12T09:37:53.000Z</published>
-    <updated>2020-05-13T13:53:40.962Z</updated>
+    <updated>2020-05-14T05:37:32.302Z</updated>
     
     <summary type="html">
     
