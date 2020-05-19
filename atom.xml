@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://baymax-tips.github.io/"/>
-  <updated>2020-05-14T13:40:51.809Z</updated>
+  <updated>2020-05-16T14:24:52.983Z</updated>
   <id>http://baymax-tips.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker入门系列  3. Docker 容器的数据管理</title>
+    <link href="http://baymax-tips.github.io/2020/05/14/docker-ru-men-xi-lie-3-docker-rong-qi-de-shu-ju-guan-li/"/>
+    <id>http://baymax-tips.github.io/2020/05/14/docker-ru-men-xi-lie-3-docker-rong-qi-de-shu-ju-guan-li/</id>
+    <published>2020-05-14T13:54:30.000Z</published>
+    <updated>2020-05-16T14:24:52.983Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;因为容器技术，重新构建并运行应用变得容易且快速，容器化应用基本是无需进一步配置的（已经打包好所有依赖并且已配置），只需PULL，然后Deploy（也许还需要一份docker-compose.yml）就好。我们无需太担心硬件，OS，库以及应用本身的潜在Bug导致应用挂掉，挂掉
+        
+      
+    
+    </summary>
+    
+    
+      <category term="容器服务" scheme="http://baymax-tips.github.io/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="http://baymax-tips.github.io/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="http://baymax-tips.github.io/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker 入门系列  2. Docker 核心概念和安装使用</title>
