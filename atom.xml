@@ -18,8 +18,8 @@
   
   <entry>
     <title>Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络</title>
-    <link href="https://baymax.tips/2020/05/22/docker-ru-men-xi-lie-4-docker-rong-qi-wang-luo-de-gai-nian-ji-wang-luo-pei-zhi-wang-qiao-wang-luo/"/>
-    <id>https://baymax.tips/2020/05/22/docker-ru-men-xi-lie-4-docker-rong-qi-wang-luo-de-gai-nian-ji-wang-luo-pei-zhi-wang-qiao-wang-luo/</id>
+    <link href="https://baymax.tips/posts/27457.html"/>
+    <id>https://baymax.tips/posts/27457.html</id>
     <published>2020-05-22T08:25:35.000Z</published>
     <updated>2020-05-23T02:30:45.249Z</updated>
     
@@ -47,8 +47,8 @@
   
   <entry>
     <title>Docker入门系列  3. Docker 容器的数据管理</title>
-    <link href="https://baymax.tips/2020/05/14/docker-ru-men-xi-lie-3-docker-rong-qi-de-shu-ju-guan-li/"/>
-    <id>https://baymax.tips/2020/05/14/docker-ru-men-xi-lie-3-docker-rong-qi-de-shu-ju-guan-li/</id>
+    <link href="https://baymax.tips/posts/38790.html"/>
+    <id>https://baymax.tips/posts/38790.html</id>
     <published>2020-05-14T13:54:30.000Z</published>
     <updated>2020-05-23T02:25:11.674Z</updated>
     
@@ -76,8 +76,8 @@
   
   <entry>
     <title>Docker 入门系列  2. Docker 核心概念和安装使用</title>
-    <link href="https://baymax.tips/2020/05/13/docker-ru-men-xi-lie-2-docker-he-xin-gai-nian-he-an-zhuang-shi-yong/"/>
-    <id>https://baymax.tips/2020/05/13/docker-ru-men-xi-lie-2-docker-he-xin-gai-nian-he-an-zhuang-shi-yong/</id>
+    <link href="https://baymax.tips/posts/17098.html"/>
+    <id>https://baymax.tips/posts/17098.html</id>
     <published>2020-05-13T13:43:34.000Z</published>
     <updated>2020-05-14T13:40:51.809Z</updated>
     
@@ -105,8 +105,8 @@
   
   <entry>
     <title>Docker 入门系列 1. Docker 简介</title>
-    <link href="https://baymax.tips/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/"/>
-    <id>https://baymax.tips/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/</id>
+    <link href="https://baymax.tips/posts/26481.html"/>
+    <id>https://baymax.tips/posts/26481.html</id>
     <published>2020-05-12T09:37:53.000Z</published>
     <updated>2020-05-14T07:05:47.712Z</updated>
     
@@ -135,8 +135,8 @@
   
   <entry>
     <title>在 Docker 中运行 OpenWrt 旁路网关</title>
-    <link href="https://baymax.tips/2020/05/09/zai-docker-zhong-yun-xing-openwrt-pang-lu-wang-guan/"/>
-    <id>https://baymax.tips/2020/05/09/zai-docker-zhong-yun-xing-openwrt-pang-lu-wang-guan/</id>
+    <link href="https://baymax.tips/posts/53042.html"/>
+    <id>https://baymax.tips/posts/53042.html</id>
     <published>2020-05-09T07:21:51.000Z</published>
     <updated>2020-05-13T13:53:35.735Z</updated>
     
@@ -170,8 +170,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://baymax.tips/2020/05/08/hello-world/"/>
-    <id>https://baymax.tips/2020/05/08/hello-world/</id>
+    <link href="https://baymax.tips/posts/16107.html"/>
+    <id>https://baymax.tips/posts/16107.html</id>
     <published>2020-05-08T08:46:04.195Z</published>
     <updated>2020-05-09T08:04:30.962Z</updated>
     

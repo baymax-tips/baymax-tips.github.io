@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 小白笔记">
+    <meta name="keywords" content="Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络, 小白笔记">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>Hello World | 小白笔记</title>
+    <title>Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络 | 小白笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络</h1>
                 </div>
             </div>
         </div>
@@ -443,8 +443,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Hexo/">
-                                <span class="chip bg-color">Hexo</span>
+                            <a href="/tags/Docker/">
+                                <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/">
+                                <span class="chip bg-color">容器服务</span>
                             </a>
                         
                     </div>
@@ -455,8 +459,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Hexo/" class="post-category">
-                                Hexo
+                            <a href="/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/" class="post-category">
+                                容器服务
                             </a>
                         
                     </div>
@@ -468,7 +472,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-05-08
+                    2020-05-22
                 </div>
                 
 
@@ -484,15 +488,120 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+                <h2 id="1-网络概述"><a href="#1-网络概述" class="headerlink" title="1. 网络概述"></a>1. 网络概述</h2><p>&emsp;&emsp;Docker容器和服务如此强大的原因之一是你可以将它们连接在一起，或将它们连接到非Docker工作负载。Docker容器和服务甚至不需要知道它们已部署在Docker上，也不必知道它们的对等对象是否也是Docker工作负载。无论您的Docker主机运行Linux，Windows还是两者结合，您都可以使用Docker以与平台无关的方式管理它们。</p>
+<p>本主题定义了一些基本的Docker网络概念，并使你准备设计和部署应用程序以充分利用这些功能。</p>
+<p>这些内容大部分都适用于所有Docker安装。但是， 一些高级功能仅适用于Docker 企业版客户。</p>
+<h3 id="1-1-网络驱动"><a href="#1-1-网络驱动" class="headerlink" title="1.1 网络驱动"></a>1.1 网络驱动</h3><p>Docker的网络子系统可使用驱动程序插拔式接入。默认情况下，有几个驱动程序，它们提供核心联网功能：</p>
+<ul>
+<li><p><code>bridge</code>：默认的网络驱动程序。如果未指定驱动程序，则这是您正在创建的网络类型。当您的应用程序在需要通信的独立容器中运行时，通常会使用<code>网桥网络</code>。请参阅 网桥网络。</p>
+</li>
+<li><p><code>host</code>：对于独立容器，请删除容器与Docker主机之间的网络隔离，然后直接使用主机的网络。host 仅可用于Docker 17.06及更高版本上的集群服务。请参阅 使用<code>主机网络</code>。</p>
+</li>
+<li><p><code>overlay</code>：<code>叠加网络</code>将多个Docker守护程序连接在一起，并使群集服务能够相互通信。您还可以使用覆盖网络来促进群集服务和独立容器之间或不同Docker守护程序上的两个独立容器之间的通信。这种策略消除了在这些容器之间进行操作系统级路由的需要。请参阅<code>叠加网络</code>。</p>
+</li>
+<li><p><code>macvlan</code>：<code>Macvlan网络</code>允许您将MAC地址分配给容器，使其在网络上显示为物理设备。Docker守护程序通过其MAC地址将流量路由到容器。macvlan 在处理希望直接连接到物理网络而不是通过Docker主机的网络堆栈进行路由的旧应用程序时，使用驱动程序有时是最佳选择。请参阅 <code>Macvlan网络</code>。</p>
+</li>
+<li><p><code>none</code>：对于此容器，请禁用所有联网。通常与自定义网络驱动程序一起使用。none不适用于群体服务。请参阅 禁用容器联网。</p>
+</li>
+<li><p><code>网络插件</code>：您可以在Docker上安装和使用第三方网络插件。这些插件可从 Docker Hub 或第三方供应商处获得。有关安装和使用给定网络插件的信息，请参阅供应商的文档。</p>
+</li>
+</ul>
+<h4 id="网络驱动程序摘要"><a href="#网络驱动程序摘要" class="headerlink" title="网络驱动程序摘要"></a>网络驱动程序摘要</h4><ul>
+<li>当您需要多个容器在同一Docker主机上进行通信时，最好使用用户定义的<code>网桥网络</code>。</li>
+<li>当网络堆栈不应与Docker主机隔离时，但您希望容器的其他方面隔离时，<code>主机网络</code>是最佳选择。</li>
+<li>当您需要在不同Docker主机上运行的容器进行通信时，或者当多个应用程序使用集群服务一起工作时，<code>覆盖网络</code>是最好的。</li>
+<li>从VM设置迁移或需要容器看起来像网络上的物理主机（每个主机都有唯一的MAC地址）时，<code>Macvlan网络</code>是最好的。</li>
+<li>第三方网络插件使您可以将Docker与专用网络堆栈集成。</li>
+</ul>
+<h3 id="1-2-Docker-EE网络功能"><a href="#1-2-Docker-EE网络功能" class="headerlink" title="1.2 Docker EE网络功能"></a>1.2 Docker EE网络功能</h3><p>以下两个功能仅在使用Docker 企业版和使用通用控制平面（UCP）管理Docker服务时才可用：</p>
+<ul>
+<li><p><code>HTTP路由网格</code> 可以让你分享多个服务之间的相同的网络IP地址和端口。根据客户端的请求，UCP使用主机名和端口的组合将流量路由到适当的服务。</p>
+</li>
+<li><p><code>会话粘性</code> 使您可以在HTTP标头中指定UCP用于需要状态会话的应用程序将后续请求路由到同一服务任务的信息。</p>
+</li>
+</ul>
+<h2 id="2-使用网桥网络"><a href="#2-使用网桥网络" class="headerlink" title="2. 使用网桥网络"></a>2. 使用网桥网络</h2><p>就网络而言，桥接网络是在网段之间转发流量的链路层设备。桥可以是在主机内核中运行的硬件设备或软件设备。</p>
+<p>就Docker而言，网桥网络使用软件网桥，该软件网桥允许连接到同一网桥网络的容器进行通信，同时与未连接到该网桥网络的容器隔离。Docker网桥驱动程序会自动在主机中安装规则，以使不同网桥网络上的容器无法直接相互通信。</p>
+<p>桥接网络适用于在同一 Docker守护程序主机上运行的容器。为了在不同Docker守护程序主机上运行的容器之间进行通信，您可以在OS级别管理路由，也可以使用<code>覆盖网络</code>。</p>
+<p>启动Docker时，会自动创建一个<code>默认的桥接网络</code>（也称为<code>bridge</code>），除非另有说明，否则新启动的容器将连接到它。您还可以创建用户定义的自定义网桥网络。<strong>用户定义的网桥网络优于默认<code>bridge</code> 网络</strong>。</p>
+<h3 id="2-1-用户定义的网桥和默认网桥之间的区别"><a href="#2-1-用户定义的网桥和默认网桥之间的区别" class="headerlink" title="2.1 用户定义的网桥和默认网桥之间的区别"></a>2.1 用户定义的网桥和默认网桥之间的区别</h3><ul>
+<li><p><strong>用户定义的网桥可在容器化应用程序之间提供更好的隔离和互操作性。</strong></p>
+<p>  连接到同一用户定义的<code>网桥网络</code>的容器会自动将所有端口彼此公开，而不会向外界公开任何端口。这使容器化的应用程序可以轻松地彼此通信，而不会意外打开对外界的访问。</p>
+<p>  想象一个具有Web前端和数据库后端的应用程序。外界需要访问Web前端（也许在端口80上），但是只有后端本身需要访问数据库主机和端口。使用用户定义的网桥，只需打开Web端口，并且数据库应用程序不需要打开任何端口，因为Web前端可以通过用户定义的网桥访问它。</p>
+<blockquote>
+<p>如果在默认网桥网络上运行相同的应用程序堆栈，则需要使用-p或–publish 标志分别打开Web端口和数据库端口。这意味着Docker主机需要通过其他方式阻止对数据库端口的访问。</p>
+</blockquote>
+</li>
+<li><p><strong>用户定义的网桥可在容器之间提供自动DNS解析。</strong></p>
+<p>  缺省桥接网络上的容器只能通过IP地址相互访问，除非您使用被认为是传统的–link选项。在用户定义的网桥网络上，容器可以通过名称或别名相互解析。</p>
+<p>  想象一下与上一点相同的应用程序，它具有一个Web前端和一个数据库后端。如果调用容器web和db，则db无论应用程序堆栈在哪个Docker主机上运行，Web容器都可以在处连接到db容器。</p>
+<blockquote>
+<p>如果在默认网桥网络上运行相同的应用程序堆栈，则需要在容器之间手动创建链接（使用旧式–link 标志）。这些链接需要双向创建，因此您可以看到，要进行通信的容器超过两个，这将变得很复杂。另外，您可以操纵/etc/hosts容器中的文件，但这会产生难以调试的问题。</p>
+</blockquote>
+</li>
+<li><p><strong>容器可以随时随地从用户定义的网络连接和分离。</strong></p>
+<blockquote>
+<p>在容器的生命周期内，您可以即时将其与用户定义的网络连接或断开连接。要从默认桥接网络中删除容器，您需要停止容器并使用其他网络选项重新创建它。</p>
+</blockquote>
+</li>
+<li><p><strong>每个用户定义的网络都会创建一个可配置的网桥。</strong></p>
+<p>  如果您的容器使用默认桥接网络，则可以对其进行配置，但是所有容器都使用相同的设置，例如MTU和iptables规则。另外，配置默认桥接网络发生在Docker本身之外，并且需要重新启动Docker。</p>
+<blockquote>
+<p>用户定义的桥接网络是使用创建和配置的 docker network create。如果不同的应用程序组具有不同的网络要求，则可以在创建时分别配置每个用户定义的网桥。</p>
+</blockquote>
+</li>
+<li><p><strong>默认网桥网络上的链接容器共享环境变量。</strong></p>
+<p>  最初，在两个容器之间共享环境变量的唯一方法是使用–linkflag链接它们。用户定义的网络无法进行这种类型的变量共享。但是，存在共享环境变量的高级方法。一些想法：</p>
+<pre><code>  - 多个容器可以使用Docker卷挂载包含共享信息的文件或目录。
+
+  - 使用可以一起启动多个容器docker-compose，并且compose文件可以定义共享变量。
+
+  - 您可以使用群体服务代替独立容器，并利用共享的机密和 配置。</code></pre></li>
+</ul>
+<p>连接到同一用户定义网桥网络的容器可以有效地将所有端口彼此公开。为了使容器或不同网络上的非Docker主机可以访问该端口，必须使用或 标志发布该端口。-p–publish</p>
+<h3 id="2-2-管理用户定义的网桥"><a href="#2-2-管理用户定义的网桥" class="headerlink" title="2.2 管理用户定义的网桥"></a>2.2 管理用户定义的网桥</h3><p>使用该docker network create命令创建用户定义的网桥网络。</p>
+<pre class=" language-bash"><code class="language-bash">docker network create my-net</code></pre>
+<p>您可以指定子网，IP地址范围，网关和其他选项。有关详细信息，请参见 docker网络创建 参考或输出docker network create –help。</p>
+<p>使用该docker network rm命令删除用户定义的网桥网络。如果容器当前已连接到网络， 请先断开它们的连接 。</p>
+<pre class=" language-bash"><code class="language-bash">docker network <span class="token function">rm</span> my-net</code></pre>
+<blockquote>
+<p><strong>到底发生了什么事？</strong></p>
+<p>当您创建或删除用户定义的网桥或将容器与用户定义的网桥连接或断开连接时，Docker使用特定于操作系统的工具来管理基础网络基础架构（例如iptables在Linux上添加或删除网桥设备或配置规则） ）。这些细节应视为实施细节。让Docker为您管理用户定义的网络。</p>
+</blockquote>
+<h3 id="2-3-将容器连接到用户定义的网桥"><a href="#2-3-将容器连接到用户定义的网桥" class="headerlink" title="2.3 将容器连接到用户定义的网桥"></a>2.3 将容器连接到用户定义的网桥</h3><p>创建新容器时，可以指定一个或多个–network标志。本示例将Nginx容器连接到my-net网络。它还将容器中的端口80发布到Docker主机上的端口8080，以便外部客户端可以访问该端口。连接到my-net 网络的任何其他容器都可以访问该my-nginx容器上的所有端口，反之亦然。</p>
+<pre class=" language-bash"><code class="language-bash">docker create --name my-nginx \
+  --network my-net \
+  --publish 8080:80 \
+  nginx:latest</code></pre>
+<p>要将运行中的容器连接到现有的用户定义的网桥，请使用以下 docker network connect命令。以下命令将一个已经在运行的my-nginx容器连接 到一个已经存在的my-net网络：</p>
+<pre class=" language-bash"><code class="language-bash">docker network connect my-net my-nginx</code></pre>
+<h3 id="2-4-断开容器与用户定义的网桥的连接"><a href="#2-4-断开容器与用户定义的网桥的连接" class="headerlink" title="2.4 断开容器与用户定义的网桥的连接"></a>2.4 断开容器与用户定义的网桥的连接</h3><p>要将运行中的容器与用户定义的网桥断开连接，请使用以下docker network disconnect命令。以下命令将my-nginx 容器与my-net网络断开连接。</p>
+<pre class=" language-bash"><code class="language-bash">docker network disconnect my-net my-nginx</code></pre>
+<h3 id="2-5-使用IPv6"><a href="#2-5-使用IPv6" class="headerlink" title="2.5 使用IPv6"></a>2.5 使用IPv6</h3><p>如果需要对Docker容器的IPv6支持，则需要 在创建任何IPv6网络或分配容器IPv6地址之前，在Docker守护程序上启用该选项并重新加载其配置。</p>
+<p>创建网络时，可以指定–ipv6标志以启用IPv6。您不能在默认bridge网络上有选择地禁用IPv6支持。</p>
+<h3 id="2-6-启用从Docker容器到外界的转发"><a href="#2-6-启用从Docker容器到外界的转发" class="headerlink" title="2.6 启用从Docker容器到外界的转发"></a>2.6 启用从Docker容器到外界的转发</h3><p>默认情况下，来自连接到默认网桥网络的容器的流量 不会转发到外界。要启用转发，您需要更改两个设置。这些不是Docker命令，它们会影响Docker主机的内核。<br>    1. 配置Linux内核以允许IP转发。</p>
+<pre><code>```bash
+sysctl net.ipv4.conf.all.forwarding=1
+```
+2. 将策略的iptables FORWARD策略从更改DROP为 ACCEPT。
+
+```bash
+sudo iptables -P FORWARD ACCEPT
+```</code></pre><p>这些设置不会在重新启动后持续存在，因此您可能需要将它们添加到启动脚本中。</p>
+<h3 id="2-7-使用默认的桥接网络"><a href="#2-7-使用默认的桥接网络" class="headerlink" title="2.7 使用默认的桥接网络"></a>2.7 使用默认的桥接网络</h3><p>默认bridge网络被认为是Docker的遗留细节，不建议用于生产环境。对其进行配置是手动操作，并且存在 技术缺陷。</p>
+<h4 id="将容器连接到默认网桥网络"><a href="#将容器连接到默认网桥网络" class="headerlink" title="将容器连接到默认网桥网络"></a>将容器连接到默认网桥网络</h4><p>如果未使用该–network标志指定网络，而是指定了网络驱动程序，则默认情况下，容器将连接到默认bridge网络。连接到默认bridge网络的容器只能通过IP地址进行通信，除非它们使用legacy –linkflag进行链接 。</p>
+<h4 id="配置默认网桥网络"><a href="#配置默认网桥网络" class="headerlink" title="配置默认网桥网络"></a>配置默认网桥网络</h4><p>要配置默认bridge网络，请在中指定选项daemon.json。这是daemon.json指定了几个选项的示例。仅指定您需要自定义的设置。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">{</span>
+  <span class="token string">"bip"</span><span class="token keyword">:</span> <span class="token string">"192.168.1.5/24"</span>,
+  <span class="token string">"fixed-cidr"</span><span class="token keyword">:</span> <span class="token string">"192.168.1.5/25"</span>,
+  <span class="token string">"fixed-cidr-v6"</span><span class="token keyword">:</span> <span class="token string">"2001:db8::/64"</span>,
+  <span class="token string">"mtu"</span><span class="token keyword">:</span> 1500,
+  <span class="token string">"default-gateway"</span><span class="token keyword">:</span> <span class="token string">"10.20.1.1"</span>,
+  <span class="token string">"default-gateway-v6"</span><span class="token keyword">:</span> <span class="token string">"2001:db8:abcd::89"</span>,
+  <span class="token string">"dns"</span><span class="token keyword">:</span> <span class="token punctuation">[</span><span class="token string">"10.20.1.2"</span>,<span class="token string">"10.20.1.3"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+<p>重新启动Docker以使更改生效。</p>
+<h4 id="将IPv6与默认桥接网络一起使用"><a href="#将IPv6与默认桥接网络一起使用" class="headerlink" title="将IPv6与默认桥接网络一起使用"></a>将IPv6与默认桥接网络一起使用</h4><p>如果将Docker配置为支持IPv6（请参阅使用IPv6），则还会自动为IPv6配置默认的桥接网络。与用户定义的网桥不同，您不能在默认网桥上有选择地禁用IPv6。</p>
 
             </div>
             <hr/>
@@ -518,7 +627,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://baymax.tips/2020/05/08/hello-world/">https://baymax.tips/2020/05/08/hello-world/</a>
+                    <a href="https://baymax.tips/posts/27457.html">https://baymax.tips/posts/27457.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -556,8 +665,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Hexo/">
-                                    <span class="chip bg-color">Hexo</span>
+                                <a href="/tags/Docker/">
+                                    <span class="chip bg-color">Docker</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/">
+                                    <span class="chip bg-color">容器服务</span>
                                 </a>
                             
                         </div>
@@ -725,35 +838,90 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/05/09/zai-docker-zhong-yun-xing-openwrt-pang-lu-wang-guan/">
+                <a href="/posts/27457.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="在 Docker 中运行 OpenWrt 旁路网关">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络">
                         
-                        <span class="card-title">在 Docker 中运行 OpenWrt 旁路网关</span>
+                        <span class="card-title">Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在接下来的文章中，我们将在 Docker 容器中运行 OpenWrt，并通过设置，让 Docker 容器中的 OpenWrt 网关接管路由器自身的网关，减轻路由器的负担，同时，由于网关被 OpenWrt 接管，所以 OpenWrt 中的大部
+                            1. 网络概述&emsp;&emsp;Docker容器和服务如此强大的原因之一是你可以将它们连接在一起，或将它们连接到非Docker工作负载。Docker容器和服务甚至不需要知道它们已部署在Docker上，也不必知道它们的对等对象是否也是D
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="post-category">
-                                    科学上网
+                            <a href="/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/" class="post-category">
+                                    容器服务
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/">
+                        <span class="chip bg-color">容器服务</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/38790.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Docker入门系列  3. Docker 容器的数据管理">
+                        
+                        <span class="card-title">Docker入门系列  3. Docker 容器的数据管理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            因为容器技术，重新构建并运行应用变得容易且快速，容器化应用基本是无需进一步配置的（已经打包好所有依赖并且已配置），只需PULL，然后Deploy（也许还需要一份docker-compose.yml）就好。我们无需太担心硬件，OS，库以及应用
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/" class="post-category">
+                                    容器服务
                                 </a>
                             
                             
@@ -767,70 +935,8 @@
                         <span class="chip bg-color">Docker</span>
                     </a>
                     
-                    <a href="/tags/openwrt/">
-                        <span class="chip bg-color">openwrt</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%97%81%E8%B7%AF%E7%94%B1/">
-                        <span class="chip bg-color">旁路由</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3/">
-                        <span class="chip bg-color">透明网关</span>
-                    </a>
-                    
-                    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">
-                        <span class="chip bg-color">科学上网</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/05/08/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Hexo/" class="post-category">
-                                    Hexo
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Hexo/">
-                        <span class="chip bg-color">Hexo</span>
+                    <a href="/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/">
+                        <span class="chip bg-color">容器服务</span>
                     </a>
                     
                 </div>
