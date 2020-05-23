@@ -15,6 +15,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167468047-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-167468047-1');
+</script>
+
 
     <title>Docker入门系列  3. Docker 容器的数据管理 | 小白笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -540,7 +551,7 @@
 <li><p>如果将绑定挂载或非空卷挂载到存在某些文件或目录的容器中的目录中，则这些文件或目录会被挂载遮盖，就像您将文件保存到Linux主机上的/mnt目，然后再挂载USB驱动器到/mnt。/mnt的内容将由USB驱动器遮盖，直至USB驱动器的内容被卸载。被遮盖的文件不会被删除或更改，但是在挂载绑定挂载或数据卷时将无法访问。</p>
 </li>
 </ul>
-<h2 id="2-数据卷"><a href="#2-数据卷" class="headerlink" title="2. 数据卷"></a>2. 数据卷</h2><p>数据卷是用于持久化由Docker容器生成和使用的数据的首选机制。尽管绑定挂载取决于主机的目录结构，但是卷完全由Docker管理。与绑定挂载相比，卷具有几个优点：</p>
+<h2 id="2-使用数据卷"><a href="#2-使用数据卷" class="headerlink" title="2. 使用数据卷"></a>2. 使用数据卷</h2><p>数据卷是用于持久化由Docker容器生成和使用的数据的首选机制。尽管绑定挂载取决于主机的目录结构，但是卷完全由Docker管理。与绑定挂载相比，卷具有几个优点：</p>
 <ul>
 <li>与绑定挂载相比，卷更易于备份或迁移。</li>
 <li>您可以使用Docker CLI命令或Docker API管理卷。</li>
@@ -776,7 +787,7 @@ $ docker volume <span class="token function">rm</span> nginx-vol</code></pre>
 <pre class=" language-bash"><code class="language-bash">docker run --rm -v /foo -v awesome:/bar busybox <span class="token function">top</span></code></pre>
 <h4 id="2-10-2-删除所有卷"><a href="#2-10-2-删除所有卷" class="headerlink" title="2.10.2 删除所有卷"></a>2.10.2 删除所有卷</h4><p>要删除所有未使用的卷并释放空间：</p>
 <pre class=" language-bash"><code class="language-bash">docker volume prune</code></pre>
-<h2 id="3-绑定挂载"><a href="#3-绑定挂载" class="headerlink" title="3. 绑定挂载"></a>3. 绑定挂载</h2><p>自Docker诞生以来，绑定挂载就已经存在。与<code>卷</code>相比，绑定安装的功能有限。使用绑定安装时，主机上的文件或目录将安装到容器中。该文件或目录由主机上的完整或相对路径引用。相比之下，当您使用卷时，将在主机上的Docker的存储目录中创建一个新目录，并且Docker管理该目录的内容。</p>
+<h2 id="3-使用绑定挂载"><a href="#3-使用绑定挂载" class="headerlink" title="3. 使用绑定挂载"></a>3. 使用绑定挂载</h2><p>自Docker诞生以来，绑定挂载就已经存在。与<code>卷</code>相比，绑定安装的功能有限。使用绑定安装时，主机上的文件或目录将安装到容器中。该文件或目录由主机上的完整或相对路径引用。相比之下，当您使用卷时，将在主机上的Docker的存储目录中创建一个新目录，并且Docker管理该目录的内容。</p>
 <p>该文件或目录不需要在Docker主机上已经存在。如果尚不存在，则按需创建。绑定挂载性能非常好，但是它们依赖于具有特定目录结构的主机文件系统。如果要开发新的Docker应用程序，请考虑使用<code>命名卷</code>。您不能使用Docker CLI命令直接管理绑定安装。</p>
 <p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589638340/hexo/docker/types-of-mounts-bind_rvrxbl.png" alt="types-of-mounts-bind"></p>
 <h3 id="3-1-选择-v或–mount标志"><a href="#3-1-选择-v或–mount标志" class="headerlink" title="3.1 选择-v或–mount标志"></a>3.1 选择-v或–mount标志</h3><p>最初，-vor –volume标志用于独立容器，而–mount标志用于集群服务。但是，从Docker 17.06开始，您还可以使用–mount独立容器。总的来说， –mount是更明确和冗长的。最大的区别是该-v 语法将所有选项合并在一个字段中，而–mount 语法将它们分开。这是每个标志的语法比较。</p>
@@ -785,15 +796,15 @@ $ docker volume <span class="token function">rm</span> nginx-vol</code></pre>
 </blockquote>
 <ul>
 <li>-v或–volume：由三个字段组成，以冒号（:）分隔。这些字段必须以正确的顺序排列，并且每个字段的含义不是立即显而易见的。<ul>
-<li>对于绑定安装，第一个字段是主机上文件或目录的路径。</li>
+<li>对于绑定挂载，第一个字段是主机上文件或目录的路径。</li>
 <li>第二个字段是文件或目录在容器中的安装路径。</li>
 <li>第三个字段是可选的，并且是用逗号分隔的选项，诸如列表ro，consistent，delegated，cached，z，和Z。这些选项将在下面讨论。</li>
 </ul>
 </li>
 <li>–mount：包含多个键值对，以逗号分隔，每个键值对都由一个<key>=<value>元组组成。该–mount语法是更详细的比-v或–volume，但按键的顺序并不显著，并且标志的价值更容易理解。<ul>
-<li>该type安装件，其可以是bind，volume，或tmpfs。本主题讨论绑定安装，因此类型始终为bind。</li>
-<li>该source的安装。对于绑定安装，这是Docker守护程序主机上文件或目录的路径。可以指定为source或 src。</li>
-<li>的destination作为其值，其中的文件或目录被安装在容器的路径。可以指定为destination，dst或target。</li>
+<li>该类型挂载，其可以是bind，volume，或tmpfs。本次讨论绑定挂载，因此类型始终为bind。</li>
+<li>该source的挂载。对于绑定挂载，这是Docker守护程序主机上文件或目录的路径。可以指定为source或 src。</li>
+<li>该destination作为其值，其中的文件或目录被挂载在容器的路径。可以指定为destination，dst或target。</li>
 <li>该readonly选项（如果存在）会使绑定安装以只读方式安装到容器中。</li>
 <li>该bind-propagation选项（如果存在）将更改 绑定传播。可以是一个rprivate， private，rshared，shared，rslave，slave。</li>
 <li>的consistency选项，如果存在，可以是一种consistent，delegated或cached。此设置仅适用于Mac的Docker桌面，在所有其他平台上将被忽略。</li>
@@ -802,6 +813,267 @@ $ docker volume <span class="token function">rm</span> nginx-vol</code></pre>
 </li>
 </ul>
 <p>下面的示例在可能的情况下同时显示–mount和-v语法，并 –mount首先展示。</p>
+<p><strong><code>-v</code>和<code>--mount</code>行为之间的差异</strong></p>
+<p>由于<code>-v</code>and <code>--volume</code>标志已经很长时间成为Docker的一部分，因此它们的行为无法更改。这意味着和之间存在一种不同的行为。-v–mount</p>
+<p>如果您使用<code>-v</code>或<code>--volume</code>绑定安装Docker主机上尚不存在的文件或目录，请-v为您创建端点。<strong>始终将其创建为目录</strong>。</p>
+<p>如果您使用–mount绑定贴装尚不泊坞窗主机上存在的文件或目录，码头工人也不会自动为您创建它，但会产生一个错误。</p>
+<h3 id="3-2-使用绑定挂载启动容器"><a href="#3-2-使用绑定挂载启动容器" class="headerlink" title="3.2 使用绑定挂载启动容器"></a>3.2 使用绑定挂载启动容器</h3><p>考虑以下情况：您有一个目录source，并且在构建源代码时，工件会保存到另一个目录中source/target/。您希望这些工件可用于的容器/app/，并且希望每次在开发主机上构建源代码时，容器都可以访问新的构建。使用以下命令将target/ 目录绑定安装到您的容器中，位于/app/。从source目录中运行命令 。该$(pwd)子命令将扩展到Linux或macOS主机上的当前工作目录。</p>
+<p>下面的–mount和-v示例产生相同的结果。您不能同时运行它们，除非devtest在运行第一个容器后删除容器。</p>
+<p><strong><code>--mount</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">docker run -d \
+  -it \
+  --name devtest \
+  --mount type<span class="token operator">=</span>bind,source<span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target,target<span class="token operator">=</span>/app \
+  nginx:latest</code></pre>
+<p><strong><code>-v</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">docker run -d \
+  -it \
+  --name devtest \
+  -v <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target:/app \
+  nginx:latest</code></pre>
+<p>使用<code>docker inspect devtest</code>验证绑定安装正确创建。查找<code>Mounts</code>部分：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token string">"Mounts"</span><span class="token keyword">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"Type"</span><span class="token keyword">:</span> <span class="token string">"bind"</span>,
+        <span class="token string">"Source"</span><span class="token keyword">:</span> <span class="token string">"/tmp/source/target"</span>,
+        <span class="token string">"Destination"</span><span class="token keyword">:</span> <span class="token string">"/app"</span>,
+        <span class="token string">"Mode"</span><span class="token keyword">:</span> <span class="token string">""</span>,
+        <span class="token string">"RW"</span><span class="token keyword">:</span> true,
+        <span class="token string">"Propagation"</span><span class="token keyword">:</span> <span class="token string">"rprivate"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>,</code></pre>
+<p>这表明该坐骑是一个bind坐骑，它显示了正确的源和目标，表明该坐骑是可读写的，并且传播设置为rprivate。</p>
+<p>停止容器：</p>
+<pre class=" language-bash"><code class="language-bash">$ docker container stop devtest
+
+$ docker container <span class="token function">rm</span> devtest
+</code></pre>
+<p><strong>挂载到容器上的非空目录中</strong></p>
+<p>如果将绑定安装到容器上的非空目录中，则该目录的现有内容将被绑定安装遮盖。这可能是有益的，例如，当您要测试应用程序的新版本而不构建新映像时。但是，这也可能令人惊讶，并且此行为不同于docker volume的行为。</p>
+<p>该示例被认为是极端的，但是用主机上的/usr/目录替换了容器目录的内容/tmp/。在大多数情况下，这将导致容器无法正常工作。</p>
+<p>在–mount和-v实施例具有相同的最终结果。</p>
+<p><strong><code>--mount</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name broken-container \
+  --mount type<span class="token operator">=</span>bind,source<span class="token operator">=</span>/tmp,target<span class="token operator">=</span>/usr \
+  nginx:latest
+
+docker: Error response from daemon: oci runtime error: container_linux.go:262:
+starting container process caused <span class="token string">"exec: \"nginx\": executable file not found in <span class="token variable">$PATH</span>"</span><span class="token keyword">.</span></code></pre>
+<p><strong><code>-v</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name broken-container \
+  -v /tmp:/usr \
+  nginx:latest
+
+docker: Error response from daemon: oci runtime error: container_linux.go:262:
+starting container process caused <span class="token string">"exec: \"nginx\": executable file not found in <span class="token variable">$PATH</span>"</span><span class="token keyword">.</span></code></pre>
+<p>容器已创建但未启动。去掉它：</p>
+<pre class=" language-bash"><code class="language-bash">$ docker container <span class="token function">rm</span> broken-container</code></pre>
+<h3 id="3-3-使用只读绑定挂载"><a href="#3-3-使用只读绑定挂载" class="headerlink" title="3.3 使用只读绑定挂载"></a>3.3 使用只读绑定挂载</h3><p>对于某些开发应用程序，容器需要写入绑定安装，因此更改将传播回Docker主机。在其他时间，容器仅需要读取访问权限。</p>
+<p>此示例修改了上面的示例，但ro通过在容器中的安装点之后添加到（默认为空）选项列表中，将目录作为只读绑定安装进行安装。如果存在多个选项，请用逗号分隔。</p>
+<p>在–mount和-v实例有同样的结果。</p>
+<p><strong><code>--mount</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type<span class="token operator">=</span>bind,source<span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target,target<span class="token operator">=</span>/app,readonly \
+  nginx:latest</code></pre>
+<p><strong><code>-v</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target:/app:ro \
+  nginx:latest</code></pre>
+<p>使用docker inspect devtest验证绑定安装正确创建。查找Mounts部分：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token string">"Mounts"</span><span class="token keyword">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"Type"</span><span class="token keyword">:</span> <span class="token string">"bind"</span>,
+        <span class="token string">"Source"</span><span class="token keyword">:</span> <span class="token string">"/tmp/source/target"</span>,
+        <span class="token string">"Destination"</span><span class="token keyword">:</span> <span class="token string">"/app"</span>,
+        <span class="token string">"Mode"</span><span class="token keyword">:</span> <span class="token string">"ro"</span>,
+        <span class="token string">"RW"</span><span class="token keyword">:</span> false,
+        <span class="token string">"Propagation"</span><span class="token keyword">:</span> <span class="token string">"rprivate"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>,</code></pre>
+<p>停止容器：</p>
+<pre class=" language-bash"><code class="language-bash">$ docker container stop devtest
+
+$ docker container <span class="token function">rm</span> devtest</code></pre>
+<h3 id="3-4-配置绑定传播"><a href="#3-4-配置绑定传播" class="headerlink" title="3.4 配置绑定传播"></a>3.4 配置绑定传播</h3><p><code>rprivate</code>对于绑定安装和卷，绑定传播默认为。它仅可用于绑定安装，并且只能在Linux主机上配置。绑定传播是一个高级主题，许多用户不需要配置它。</p>
+<p>绑定传播是指是否可以将在给定绑定安装或命名卷中创建的安装传播到该安装的副本。考虑一个安装点<code>/mnt</code>，它也安装在上<code>/tmp</code>。传播设置控制是否<code>/tmp/a</code>可以在上安装底座<code>/mnt/a</code>。每个传播设置都有一个递归对点。在递归的情况下，请考虑将<code>/tmp/a</code>其也安装为<code>/foo</code>。传播设置控制是否<code>/mnt/a</code>和/或<code>/tmp/a</code>将存在。</p>
+<br>
+
+<table>
+<thead>
+<tr>
+<th align="center">传播设置</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>shared</code></td>
+<td align="left">原始安装的子安装暴露于副本安装，副本安装的子安装也传播到原始安装。</td>
+</tr>
+<tr>
+<td align="center"><code>slave</code></td>
+<td align="left">与共享安装类似，但仅在一个方向上。如果原始安装公开了子安装，则副本安装可以看到它。但是，如果副本安装公开了子安装，则原始安装看不到它。</td>
+</tr>
+<tr>
+<td align="center"><code>private</code></td>
+<td align="left">坐骑是私人的。其中的子安装不暴露于副本安装，副本安装的子安装也不暴露于原始安装。</td>
+</tr>
+<tr>
+<td align="center"><code>rshared</code></td>
+<td align="left">与共享相同，但传播也扩展到嵌套在任何原始或副本安装点中的安装点以及从这些安装点扩展。</td>
+</tr>
+<tr>
+<td align="center"><code>rslave</code></td>
+<td align="left">与从属服务器相同，但是传播也扩展到嵌套在任何原始或副本安装点中的安装点以及从这些安装点扩展。</td>
+</tr>
+<tr>
+<td align="center"><code>rprivate</code></td>
+<td align="left">默认值。与专用相同，这意味着原始或副本安装点内的任何安装点都不会向任一方向传播。</td>
+</tr>
+</tbody></table>
+<br>
+<br>
+
+<p>在可以在安装点上设置绑定传播之前，主机文件系统需要已经支持绑定传播。</p>
+<p>有关绑定传播的更多信息，请参见 Linux内核文档中的共享子树。</p>
+<p>以下示例将target/目录两次安装到容器中，第二次安装同时设置了ro选项和rslave绑定传播选项。</p>
+<p>在–mount和-v实例有同样的结果。</p>
+<p><strong><code>--mount</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type<span class="token operator">=</span>bind,source<span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target,target<span class="token operator">=</span>/app \
+  --mount type<span class="token operator">=</span>bind,source<span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target,target<span class="token operator">=</span>/app2,readonly,bind-propagation<span class="token operator">=</span>rslave \
+  nginx:latest</code></pre>
+<p><strong><code>-v</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target:/app \
+  -v <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target:/app2:ro,rslave \
+  nginx:latest</code></pre>
+<p>现在，如果您创建<code>/app/foo/</code>，它<code>/app2/foo/</code>也存在。</p>
+<h3 id="3-5-配置selinux标签"><a href="#3-5-配置selinux标签" class="headerlink" title="3.5 配置selinux标签"></a>3.5 配置selinux标签</h3><p>如果使用selinux，则可以添加z或Z选项来修改要装入容器的主机文件或目录的selinux标签。这会影响主机本身上的文件或目录，并可能导致超出Docker范围的后果。</p>
+<ul>
+<li>该z选项指示绑定安装内容在多个容器之间共享。</li>
+<li>该Z选项指示绑定安装内容是私有的且未共享。</li>
+</ul>
+<p>这些选项请格外小心。绑定安装系统目录（例如/home或/usr带有该Z选项）会使主机无法运行，并且您可能需要手动重新标记主机文件。</p>
+<blockquote>
+<p><strong>重要说明</strong>：将绑定安装与服务一起使用时，selinux标签（<code>:Z</code>和<code>:z</code>）以及将<code>:ro</code>被忽略。有关详细信息，请参见 <a href="https://github.com/moby/moby/issues/32579" target="_blank" rel="noopener"><code>moby / moby＃32579</code></a>。</p>
+</blockquote>
+<p>本示例设置z选项以指定多个容器可以共享绑定安装的内容：</p>
+<p>无法使用该–mount标志修改selinux标签。</p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target:/app:z \
+  nginx:latest</code></pre>
+<h3 id="3-6-配置macOS的挂载一致性"><a href="#3-6-配置macOS的挂载一致性" class="headerlink" title="3.6 配置macOS的挂载一致性"></a>3.6 配置macOS的挂载一致性</h3><p>用于Mac的Docker桌面用于osxfs将从macOS共享的目录和文件传播到Linux VM。这种传播使这些目录和文件可用于在Mac上运行Docker Desktop的Docker容器。</p>
+<p>默认情况下，这些共享是完全一致的，这意味着每次在macOS主机上或通过容器中的挂载进行写操作时，所做的更改都会刷新到磁盘上，以便共享中的所有参与者都具有完全一致的视图。在某些情况下，完全一致性可能会严重影响性能。Docker 17.05及更高版本引入了一些选项，可以针对每个容器，每个容器来调整一致性设置。提供以下选项：</p>
+<ul>
+<li><p><code>consistent</code>或<code>default</code>：如上所述，具有完全一致性的默认设置。</p>
+</li>
+<li><p><code>delegated</code>：容器运行时的挂载视图具有权威性。在主机上看到容器中所做的更新之前可能会有所延迟。</p>
+</li>
+<li><p><code>cached</code>：macOS主机的挂载视图具有权威性。在容器中可以看到主机上所做的更新，这可能会有所延迟。</p>
+</li>
+</ul>
+<p>这些选项在除macOS之外的所有主机操作系统上均被完全忽略。</p>
+<p>在–mount和-v实例有同样的结果。</p>
+<p><strong><code>--mount</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type<span class="token operator">=</span>bind,source<span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target,destination<span class="token operator">=</span>/app,consistency<span class="token operator">=</span>cached \
+  nginx:latest</code></pre>
+<p><strong><code>-v</code></strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">pwd</span><span class="token variable">)</span></span>"</span>/target:/app:cached \
+  nginx:latest</code></pre>
+<h2 id="3-使用tmpfs-挂载"><a href="#3-使用tmpfs-挂载" class="headerlink" title="3. 使用tmpfs 挂载"></a>3. 使用tmpfs 挂载</h2><p>数据卷和绑定挂载使您可以在主机和容器之间共享文件，以便即使容器停止后也可以保留数据。</p>
+<p>如果您在Linux上运行Docker，则还有第三种选择：tmpfs挂载。当创建带有tmpfs安装架的容器时，该容器可以在该容器的可写层之外创建文件。</p>
+<p>与卷和绑定挂载相反，tmpfs挂载是临时的，并且仅保留在主机内存中。当容器停止时，tmpfs挂载将被删除，并且在其中写入的文件将不会保留。</p>
+<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1590133898/hexo/docker/types-of-mounts-tmpfs_fpwsba.png" alt="types-of-mounts-tmpfs"></p>
+<p>这对于在主机或容器可写层中临时存储您不想持久保存的敏感文件很有用。</p>
+<h3 id="3-1-tmpfs安装的局限性"><a href="#3-1-tmpfs安装的局限性" class="headerlink" title="3.1 tmpfs安装的局限性"></a>3.1 tmpfs安装的局限性</h3><ul>
+<li><p>与卷和绑定安装不同，您不能tmpfs在容器之间共享安装。</p>
+</li>
+<li><p>仅当您在Linux上运行Docker时，此功能才可用。</p>
+</li>
+</ul>
+<h3 id="3-2-选择–tmpfs或–mount标志"><a href="#3-2-选择–tmpfs或–mount标志" class="headerlink" title="3.2 选择–tmpfs或–mount标志"></a>3.2 选择–tmpfs或–mount标志</h3><p>最初，该–tmpfs标志用于独立容器，而该–mount标志用于集群服务。但是，从Docker 17.06开始，您还可以使用–mount独立容器。总的来说， –mount是更明确和冗长的。最大的区别是该 –tmpfs标志不支持任何可配置的选项。</p>
+<ul>
+<li><p>–tmpfs：挂载tmpfs挂载而不允许您指定任何可配置的选项，并且只能与独立容器一起使用。</p>
+</li>
+<li><p>–mount：包含多个键值对，以逗号分隔，每个键值对都由一个<key>=<value>元组组成。该–mount语法比更详细–tmpfs：</p>
+<ul>
+<li>该type安装件，其可以是bind，volume，或 tmpfs。本主题讨论tmpfs，因此类型始终为 tmpfs。</li>
+<li>的destination作为其值，其中的路径tmpfs安装被安装在容器中。可以指定为destination，dst或target。</li>
+<li>在tmpfs-type和tmpfs-mode选项。请参阅 tmpfs选项。</li>
+</ul>
+</li>
+</ul>
+<p>下面的示例在可能的情况下同时显示–mount和–tmpfs语法，并–mount首先展示。</p>
+<h4 id="–tmpfs和–mount行为之间的差异"><a href="#–tmpfs和–mount行为之间的差异" class="headerlink" title="–tmpfs和–mount行为之间的差异"></a>–tmpfs和–mount行为之间的差异</h4><ul>
+<li>该–tmpfs标志不允许您指定任何可配置的选项。</li>
+<li>该–tmpfs标志不能与群集服务一起使用。您必须使用–mount。</li>
+</ul>
+<h3 id="3-3-在容器中使用tmpfs挂载"><a href="#3-3-在容器中使用tmpfs挂载" class="headerlink" title="3.3 在容器中使用tmpfs挂载"></a>3.3 在容器中使用tmpfs挂载</h3><p>要tmpfs在容器中使用安装座，请使用–tmpfs标志，或将 –mount标志与type=tmpfs和destination选项一起使用。没有 source了tmpfs坐骑。以下示例在Nginx容器中的上创建一个tmpfs安装 /app。第一个示例使用–mount标志，第二个示例使用–tmpfs标志。</p>
+<p><strong>–mount</strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name tmptest \
+  --mount type<span class="token operator">=</span>tmpfs,destination<span class="token operator">=</span>/app \
+  nginx:latest</code></pre>
+<p><strong>–tmpfs</strong></p>
+<pre class=" language-bash"><code class="language-bash">$ docker run -d \
+  -it \
+  --name tmptest \
+  --tmpfs /app \
+  nginx:latest</code></pre>
+<p>tmpfs通过运行docker container inspect tmptest并查找以下Mounts部分来验证安装是否为安装：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token string">"Tmpfs"</span><span class="token keyword">:</span> <span class="token punctuation">{</span>
+    <span class="token string">"/app"</span><span class="token keyword">:</span> <span class="token string">""</span>
+<span class="token punctuation">}</span>,</code></pre>
+<p>卸下容器：</p>
+<pre class=" language-bash"><code class="language-bash">$ docker container stop tmptest
+
+$ docker container <span class="token function">rm</span> tmptest</code></pre>
+<h4 id="指定tmpfs选项"><a href="#指定tmpfs选项" class="headerlink" title="指定tmpfs选项"></a>指定tmpfs选项</h4><p>tmpfs安装允许两个配置选项，都不是必需的。如果需要指定这些选项，则必须使用该–mount标志，因为该–tmpfs标志不支持它们。<br><br></p>
+<table>
+<thead>
+<tr>
+<th align="center">选项</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">tmpfs-size</td>
+<td align="left">tmpfs安装的大小（以字节为单位）。默认情况下不受限制。</td>
+</tr>
+<tr>
+<td align="center">tmpfs-mode</td>
+<td align="left">tmpfs的文件模式（八进制）。例如700或0770。默认为1777或世界可写。</td>
+</tr>
+</tbody></table>
+<br>
+
+<p>以下示例将设置tmpfs-mode为1770，以使其在容器内不被世界范围内读取。</p>
+<pre class=" language-bash"><code class="language-bash">docker run -d \
+  -it \
+  --name tmptest \
+  --mount type<span class="token operator">=</span>tmpfs,destination<span class="token operator">=</span>/app,tmpfs-mode<span class="token operator">=</span>1770 \
+  nginx:latest</code></pre>
 
             </div>
             <hr/>
@@ -1038,30 +1310,29 @@ $ docker volume <span class="token function">rm</span> nginx-vol</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/05/14/docker-ru-men-xi-lie-3-docker-rong-qi-de-shu-ju-guan-li/">
+                <a href="/2020/05/22/docker-ru-men-xi-lie-4-docker-rong-qi-wang-luo-de-gai-nian-ji-wang-luo-pei-zhi-wang-qiao-wang-luo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Docker入门系列  3. Docker 容器的数据管理">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络">
                         
-                        <span class="card-title">Docker入门系列  3. Docker 容器的数据管理</span>
+                        <span class="card-title">Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            因为容器技术，重新构建并运行应用变得容易且快速，容器化应用基本是无需进一步配置的（已经打包好所有依赖并且已配置），只需PULL，然后Deploy（也许还需要一份docker-compose.yml）就好。我们无需太担心硬件，OS，库以及应用
+                            1. 网络概述&emsp;&emsp;Docker容器和服务如此强大的原因之一是你可以将它们连接在一起，或将它们连接到非Docker工作负载。Docker容器和服务甚至不需要知道它们已部署在Docker上，也不必知道它们的对等对象是否也是D
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-14
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-22
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1074,7 +1345,6 @@ $ docker volume <span class="token function">rm</span> nginx-vol</code></pre>
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Docker 入门系列 1. Docker 简介, 小白笔记">
+    <meta name="keywords" content="Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络, 小白笔记">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>Docker 入门系列 1. Docker 简介 | 小白笔记</title>
+    <title>Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络 | 小白笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -321,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Docker 入门系列 1. Docker 简介</h1>
+                    <h1 class="description center-align post-title">Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络</h1>
                 </div>
             </div>
         </div>
@@ -472,7 +472,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-05-12
+                    2020-05-22
                 </div>
                 
 
@@ -488,97 +488,120 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>&emsp;&emsp;本系列笔记是作为一个新手小白，从了解 Docker 是什么、Docker 技术包含哪些概念到上手使用、安装以及发布 Docker 镜像的整个过程。小白在学习过程中遵循简介、入门、上手到深入的顺序，根据个人学习实践过程进行书写与记录。</p>
-<h2 id="一、-Docker-简介"><a href="#一、-Docker-简介" class="headerlink" title="一、 Docker 简介"></a>一、 Docker 简介</h2><p>&emsp;&emsp;Docker是DotCloud开源的、可以将任何应用包装在Linux container中运行的工具。Docker是供开发人员和系统管理员：使用容器构建，运行和共享应用程序的平台。使用容器来部署应用程序称为容器化。容器不是新的技术，但用于轻松部署应用程序的Docker却是新的未来。</p>
-<h3 id="1-容器的概念"><a href="#1-容器的概念" class="headerlink" title="1. 容器的概念"></a>1. 容器的概念</h3><p>&emsp;&emsp;<strong>Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。</strong>它是目前最流行的 Linux 容器解决方案。而 Linux 容器是 Linux 发展出了另一种虚拟化技术，简单来讲， Linux 容器不是模拟一个完整的操作系统，而是对进程进行隔离，相当于是在正常进程的外面套了一个保护层。对于容器里面的进程来说，它接触到的各种资源都是虚拟的，从而实现与底层系统的隔离。</p>
-<p>&emsp;&emsp;<strong><code>Docker</code> 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个<code>虚拟容器</code>里运行，就好像在真实的物理机上运行一样。有了 <code>Docker</code> ，就不用担心环境问题。</strong></p>
-<p>&emsp;&emsp;<code>Docker</code> 利用 Linux 核心中的资源分脱机制，例如 <code>cgroups</code>，以及 Linux 核心名字空间（name space），来创建独立的软件容器（<code>containers</code>），属于<strong>操作系统层面的虚拟化</strong>技术。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。<code>Docker</code> 在容器的基础上进行了进一步的封装，从文件系统、网络互联到进程隔离等等，极大的简化了容器的创建和维护，使得其比虚拟机技术更为轻便、快捷。<code>Docker</code> 可以在单一 Linux 实体下运作，避免因为创建一个虚拟机而造成的额外负担。</p>
-<p>容器化越来越受欢迎，因为容器具有一下有点:</p>
-<blockquote>
+                <h2 id="1-网络概述"><a href="#1-网络概述" class="headerlink" title="1. 网络概述"></a>1. 网络概述</h2><p>&emsp;&emsp;Docker容器和服务如此强大的原因之一是你可以将它们连接在一起，或将它们连接到非Docker工作负载。Docker容器和服务甚至不需要知道它们已部署在Docker上，也不必知道它们的对等对象是否也是Docker工作负载。无论您的Docker主机运行Linux，Windows还是两者结合，您都可以使用Docker以与平台无关的方式管理它们。</p>
+<p>本主题定义了一些基本的Docker网络概念，并使你准备设计和部署应用程序以充分利用这些功能。</p>
+<p>这些内容大部分都适用于所有Docker安装。但是， 一些高级功能仅适用于Docker 企业版客户。</p>
+<h3 id="1-1-网络驱动"><a href="#1-1-网络驱动" class="headerlink" title="1.1 网络驱动"></a>1.1 网络驱动</h3><p>Docker的网络子系统可使用驱动程序插拔式接入。默认情况下，有几个驱动程序，它们提供核心联网功能：</p>
 <ul>
-<li>灵活：即使最复杂的也可以容器化。</li>
-<li>轻量级：容器利用并共享主机内核，在系统资源方面比虚拟机效率更高。</li>
-<li>可移植性：您可以在本地构建，部署到云并在任何地方运行。</li>
-<li>松散耦合：容器是高度自给自足并封装的容器，使您可以在不破坏其他容器的情况下更换或升级它们。</li>
-<li>可扩展：您可以在数据中心内增加并自动分布容器副本。</li>
-<li>安全：容器将积极的约束和隔离应用于流程，而无需用户方面的任何配置。</li>
+<li><p><code>bridge</code>：默认的网络驱动程序。如果未指定驱动程序，则这是您正在创建的网络类型。当您的应用程序在需要通信的独立容器中运行时，通常会使用<code>网桥网络</code>。请参阅 网桥网络。</p>
+</li>
+<li><p><code>host</code>：对于独立容器，请删除容器与Docker主机之间的网络隔离，然后直接使用主机的网络。host 仅可用于Docker 17.06及更高版本上的集群服务。请参阅 使用<code>主机网络</code>。</p>
+</li>
+<li><p><code>overlay</code>：<code>叠加网络</code>将多个Docker守护程序连接在一起，并使群集服务能够相互通信。您还可以使用覆盖网络来促进群集服务和独立容器之间或不同Docker守护程序上的两个独立容器之间的通信。这种策略消除了在这些容器之间进行操作系统级路由的需要。请参阅<code>叠加网络</code>。</p>
+</li>
+<li><p><code>macvlan</code>：<code>Macvlan网络</code>允许您将MAC地址分配给容器，使其在网络上显示为物理设备。Docker守护程序通过其MAC地址将流量路由到容器。macvlan 在处理希望直接连接到物理网络而不是通过Docker主机的网络堆栈进行路由的旧应用程序时，使用驱动程序有时是最佳选择。请参阅 <code>Macvlan网络</code>。</p>
+</li>
+<li><p><code>none</code>：对于此容器，请禁用所有联网。通常与自定义网络驱动程序一起使用。none不适用于群体服务。请参阅 禁用容器联网。</p>
+</li>
+<li><p><code>网络插件</code>：您可以在Docker上安装和使用第三方网络插件。这些插件可从 Docker Hub 或第三方供应商处获得。有关安装和使用给定网络插件的信息，请参阅供应商的文档。</p>
+</li>
 </ul>
-</blockquote>
-<h3 id="2-容器和虚拟机"><a href="#2-容器和虚拟机" class="headerlink" title="2. 容器和虚拟机"></a>2. 容器和虚拟机</h3><p>容器在Linux上本地运行，并与其他容器共享主机的内核。它运行一个离散进程，不占用任何其他可执行文件更多的内存，从而使其轻巧。由于容器是进程级别的，相比虚拟机有很多优势</p>
-<p>相比之下，虚拟机（VM）就是带环境安装的一种解决方案。它可以在一种操作系统里面运行另一种操作系统，比如在 Windows 系统里面运行 Linux 系统。并通过虚拟机管理程序对主机资源进行虚拟访问。通常，VM会产生大量开销，超出了应用程序逻辑所消耗的开销。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589358055/hexo/Container_kgmlbw.png" alt="容器技术"></td>
-<td><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589358057/hexo/VM_ioupe2.png" alt="虚拟机"></td>
-</tr>
-</tbody></table>
-<h4 id="1-容器技术"><a href="#1-容器技术" class="headerlink" title="1) 容器技术"></a>1) 容器技术</h4><p>容器技术是和我们的宿主机共享硬件资源及操作系统，可以实现资源的动态分配。容器包含应用和其所有的依赖包，但是与其他容器共享内核。容器在宿主机操作系统中，在用户空间以分离的进程运行。容器内没有自己的内核，也没有进行硬件虚拟。</p>
-<h4 id="2-虚拟机"><a href="#2-虚拟机" class="headerlink" title="2) 虚拟机"></a>2) 虚拟机</h4><p>对于虚拟机技术来说，传统虚拟机如 VMware ， VisualBox 之类的需要模拟整台机器包括硬件，每台虚拟机都需要有自己的操作系统，虚拟机一旦被开启，预分配给它的资源将全部被占用。每一台虚拟机包括应用，必要的二进制和库，以及一个完整的用户操作系统。</p>
-<blockquote>
-<p>容器技术是实现操作系统虚拟化的一种途径，可以让您在资源受到隔离的进程中运行应用程序及其依赖关系。通过使用容器，我们可以轻松打包应用程序的代码、配置和依赖关系，将其变成容易使用的构建块，从而实现环境一致性、运营效率、开发人员生产力和版本控制等诸多目标。容器可以帮助保证应用程序快速、可靠、一致地部署，其间不受部署环境的影响。容器还赋予我们对资源更多的精细化控制能力，让我们的基础设施效率更高。通过上面这幅图我们可以很直观的反映出这两者的区别所在。</p>
-</blockquote>
-<p><strong>具体来说与虚拟机技术对比，Docker 容器存在以下几个特点：</strong></p>
-<p>&emsp;&emsp;<strong>1. 更快的启动速度：</strong> 因为 Docker 直接运行于宿主内核，无需启动完整的操作系统，因此启动速度属于秒级别，而虚拟机通常需要几分钟去启动。</p>
-<p>&emsp;&emsp;<strong>2. 更高效的资源利用率：</strong>由于容器不需要进行硬件虚拟以及运行完整操作系统等额外开销，Docker 对系统资源的利用率更高。</p>
-<p>&emsp;&emsp;<strong>3. 更高的系统支持量：</strong>Docker 的架构可以共用一个内核与共享应用程序库，所占内存极小。同样的硬件环境，Docker 运行的镜像数远多于虚拟机数量，对系统的利用率非常高。</p>
-<p>&emsp;&emsp;<strong>4. 持续交付与部署：</strong>对开发和运维人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 Dockerfile 来进行镜像构建，并进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至进行自动部署。</p>
-<p>&emsp;&emsp;<strong>5. 更轻松的迁移：</strong>由于 Docker 确保了执行环境的一致性，使得应用的迁移更加容易。Docker 可以在很多平台上运行，无论是物理机、虚拟机、公有云、私有云，甚至是笔记本，其运行结果是一致的。因此用户可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。</p>
-<p>&emsp;&emsp;<strong>6. 更轻松的维护与扩展：</strong>Docker 使用的分层存储以及镜像的技术，使得应用重复部分的复用更为容易，也使得应用的维护更新更加简单，基于基础镜像进一步扩展镜像也变得非常简单。此外，Docker 团队同各个开源项目团队一起维护了一大批高质量的 官方镜像，既可以直接在生产环境使用，又可以作为基础进一步定制，大大的降低了应用服务的镜像制作成本。</p>
-<p>&emsp;&emsp;<strong>7. 更弱的隔离性：</strong>Docker 属于进程之间的隔离，虚拟机可实现系统级别隔离。</p>
-<p>&emsp;&emsp;<strong>8. 更弱的安全性：</strong>Docker 的租户 root 和宿主机 root 等同，一旦容器内的用户从普通用户权限提升为 root 权限，它就直接具备了宿主机的 root 权限，进而可进行无限制的操作。虚拟机租户 root 权限和宿主机的 root 虚拟机权限是分离的，并且利用硬件隔离技术可以防止虚拟机突破和彼此交互，而容器至今还没有任何形式的硬件隔离，这使得容器容易受到攻击。</p>
-<h3 id="3-Docker的用途"><a href="#3-Docker的用途" class="headerlink" title="3. Docker的用途"></a>3. Docker的用途</h3><p>&emsp;&emsp;<code>Docker</code> 的主要用途，目前有三大类。</p>
-<p>&emsp;&emsp;（1）提供一次性的环境。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。</p>
-<p>&emsp;&emsp;（2）提供弹性的云服务。因为 Docker 容器可以随开随关，很适合动态扩容和缩容。</p>
-<p>&emsp;&emsp;（3）组建微服务架构。通过多个容器，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。</p>
-<h3 id="4-容器编排"><a href="#4-容器编排" class="headerlink" title="4. 容器编排"></a>4. 容器编排</h3><p><code>Docker</code>平台以及周边生态系统包含很多工具来管理容器的生命周期。<br>&emsp;&emsp;例如，<strong>Docker Command Line Interface(CLI)支持下面的容器活动:</strong></p>
-<p>&emsp;&emsp; - 从注册表中拉取仓库。<br>&emsp;&emsp; - 运行容器并可选的附加一个终端给它。<br>&emsp;&emsp; - 将容器提交新镜像。<br>&emsp;&emsp; - 上传镜像到注册中心。<br>&emsp;&emsp; - 终止运行中的容器。</p>
-<p><strong>Docker Command Line Interface(CLI) 满足在单个主机上管理容器的需求，但是面对部署在多个主机上的容器时就无所适从了。为了超越单个容器管理，我们必须转向编排工具。<code>容器编排工具</code>将生命周期管理能力扩展到部署在大量机器集群上部署的复杂的、多容器工作负载。通过抽象主机基础结构， 编排工具允许用户将整个集群视为单个部署目标。</strong></p>
-<blockquote>
-<p><strong>容器编排工具</strong> 提供调度和集群的技术，提供用于基于容器应用可扩展性的基本机制。这些工具使用容器服务，并编排他们以决定容器之间如何进行交互。此外，编排允许容器可以存在并执行在集群上，这使得他们能够扩展来适应增加的处理负荷。</p>
-</blockquote>
-<p>&emsp;&emsp;典型的容器编排工具有助于虚拟化一组机器并将它们作为单个集群管理。容器编排工具也有助于将机器上的工作负载或容器移动到消费者透明的位置。很多工具目前既支持基于DOCKER的容器，也支持非容器化二进制文件部署，例如独立的Spring Boot应用程序。这些容器编排工具的基本功能是从应用程序中抽象出实际的服务器实例。</p>
-<blockquote>
-<p><strong>容器编排工具</strong> 为开发人员和基础设施团队提供了一个抽象层来处理大规模的容器化部署。<code>容器编排工具</code>提供的特征在众多提供者之间有所不同，然而常见的公共特征包含准备、发现、资源管理、监视和部署。</p>
-</blockquote>
-<p><strong>容器编排工具的一些关键能力概括如下：</strong></p>
+<h4 id="网络驱动程序摘要"><a href="#网络驱动程序摘要" class="headerlink" title="网络驱动程序摘要"></a>网络驱动程序摘要</h4><ul>
+<li>当您需要多个容器在同一Docker主机上进行通信时，最好使用用户定义的<code>网桥网络</code>。</li>
+<li>当网络堆栈不应与Docker主机隔离时，但您希望容器的其他方面隔离时，<code>主机网络</code>是最佳选择。</li>
+<li>当您需要在不同Docker主机上运行的容器进行通信时，或者当多个应用程序使用集群服务一起工作时，<code>覆盖网络</code>是最好的。</li>
+<li>从VM设置迁移或需要容器看起来像网络上的物理主机（每个主机都有唯一的MAC地址）时，<code>Macvlan网络</code>是最好的。</li>
+<li>第三方网络插件使您可以将Docker与专用网络堆栈集成。</li>
+</ul>
+<h3 id="1-2-Docker-EE网络功能"><a href="#1-2-Docker-EE网络功能" class="headerlink" title="1.2 Docker EE网络功能"></a>1.2 Docker EE网络功能</h3><p>以下两个功能仅在使用Docker 企业版和使用通用控制平面（UCP）管理Docker服务时才可用：</p>
 <ul>
-<li><strong>集群管理：</strong>将虚拟机和物理机器的集群管理为一台大型机器。这些机器在资源能力方面可能有些差异，但大体上都是以Linux作为操作系统的机器。这些虚拟集群可以建立在云上、本地或两者的混合。</li>
-<li><strong>部署：</strong>能处理有大量机器的应用程序和容器的自动部署。支持多个版本的应用程序容器，并且还支持跨越大量集群机器的滚动升级。这些工具还能够处理故障回滚。</li>
-<li><strong>可伸缩性：</strong>支持应用实例的自动和手动伸缩，以性能优化为主要目标。</li>
-<li><strong>健康：</strong>它管理集群、节点和应用程序的健康。可以从集群中移除异常的机器和应用程序实例。</li>
-<li><strong>基础结构抽象化：</strong>开发人员不必担心机器、容量等问题。完全是容器编排工具来决定如何调度和运行应用程序。这些工具也抽象化机器的细节、能力、使用和位置。对于应用程序所有者来说，它们相当于一个容量几乎无限的大型机器。</li>
-<li><strong>资源优化：</strong>这些工具以有效的方式在一组可用机器上分配容器工作负载，从而降低成本，通过从简单的到复杂的算法可有效地提高利用率。</li>
-<li><strong>资源分配：</strong>基于应用程序开发人员设置的资源可用性和约束来分配服务器。资源分配将基于约束、规则、端口要求、应用依赖性、健康等等。</li>
-<li><strong>服务可用性：</strong>确保服务在集群中正常运行。在机器故障的情况下，容器编排会自动通过在集群中的其他机器上重新启动这些服务来处理故障。</li>
-<li><strong>敏捷性：</strong>敏捷性工具能够快速分配工作负载到可用资源，或者在资源需求发生变化时跨机器移动工作量。此外，可以根据业务临界性、业务优先级等来设置约束重新调整资源。</li>
-<li><strong>隔离：</strong>一些工具提供了资源隔离。因此，即使应用程序不是容器化的，也可以实现资源隔离。</li>
+<li><p><code>HTTP路由网格</code> 可以让你分享多个服务之间的相同的网络IP地址和端口。根据客户端的请求，UCP使用主机名和端口的组合将流量路由到适当的服务。</p>
+</li>
+<li><p><code>会话粘性</code> 使您可以在HTTP标头中指定UCP用于需要状态会话的应用程序将后续请求路由到同一服务任务的信息。</p>
+</li>
 </ul>
-<h3 id="5-编排工具"><a href="#5-编排工具" class="headerlink" title="5. 编排工具"></a>5. 编排工具</h3><h4 id="1-Kubernetes"><a href="#1-Kubernetes" class="headerlink" title="1) Kubernetes"></a>1) Kubernetes</h4><p>&emsp;&emsp;Kubernetes是一个开源的，开箱即用的容器集群管理器和业务流程。它具有出色的构建 调度器 和资源管理器，用于以更有效和高度可用的方式部署容器。Kubernetes已成为许多组织事实上的容器编排工具。kubernetes项目由google与世界各地的贡献者维护。它提供了本机Docker工具不提供的许多功能。而且，使用kubernetes很容易上手。</p>
-<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374109/hexo/kubernetes_yxk3g7.jpg" alt="Kubernetes"></p>
-<h4 id="2-OpenShift"><a href="#2-OpenShift" class="headerlink" title="2) OpenShift"></a>2) OpenShift</h4><p>&emsp;&emsp;Openshift建立在kubernetes之上。Openshift项目由Redhat维护。它同时具有开源（openshift orgin）和企业版（openshift容器平台）。连同核心的Kubernetes功能，它提供了用于容器管理和编排的开箱即用组件。<br><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374123/hexo/OpenShift_rfa8hh.jpg" alt="OpenShift"></p>
-<h4 id="3-Docker-Swarm"><a href="#3-Docker-Swarm" class="headerlink" title="3) Docker Swarm"></a>3) Docker Swarm</h4><p>&emsp;&emsp;Docker生态系统包括从开发到生产部署框架的工具。在该列表中，docker swarm适用于集群管理。可以使用docker-compose，swarm，overlay网络和良好的服务发现工具（例如etcd或consul）的组合来管理Docker容器集群。</p>
-<p>与其他开源容器集群管理工具相比，Docker swarm在功能方面仍日趋成熟。考虑到庞大的Docker贡献者，Docker swarm拥有其他工具拥有的所有最佳功能不会太久。Docker记录了在生产中使用docker swarm 的良好生产计划。</p>
-<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374125/hexo/Swarm_fbtool.jpg" alt="Docker Swarm"></p>
-<h4 id="4-Mesos"><a href="#4-Mesos" class="headerlink" title="4) Mesos"></a>4) Mesos</h4><p>&emsp;&emsp;Mesos是另一个可以非常有效地管理容器编排的群集管理工具。它是由Twitter为其基础架构创建的，然后获得了开源。它已被eBay，Airbnb等公司使用。Mesos并不是用于容器的专用工具，</p>
-<p>Mesos不是用于容器的专用工具，相反，您可以将其用于VM或物理机群集，以运行容器以外的工作负载（大数据等）。它具有一个称为Marathon的有效框架，用于在Mesos群集上部署和管理容器。<br><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589374127/hexo/Mesos_xjlyvv.jpg" alt="Mesos"></p>
-<h3 id="6-服务网格"><a href="#6-服务网格" class="headerlink" title="6. 服务网格"></a>6. 服务网格</h3><p>&emsp;&emsp;容器和容器编排技术的兴起使得新的基础架构成为了可能，使我们能够摆脱服务发现/负载平衡/断路器框架的束缚。 这个新的基础设施就是“服务网格”，那服务网格是什么呢？</p>
+<h2 id="2-使用网桥网络"><a href="#2-使用网桥网络" class="headerlink" title="2. 使用网桥网络"></a>2. 使用网桥网络</h2><p>就网络而言，桥接网络是在网段之间转发流量的链路层设备。桥可以是在主机内核中运行的硬件设备或软件设备。</p>
+<p>就Docker而言，网桥网络使用软件网桥，该软件网桥允许连接到同一网桥网络的容器进行通信，同时与未连接到该网桥网络的容器隔离。Docker网桥驱动程序会自动在主机中安装规则，以使不同网桥网络上的容器无法直接相互通信。</p>
+<p>桥接网络适用于在同一 Docker守护程序主机上运行的容器。为了在不同Docker守护程序主机上运行的容器之间进行通信，您可以在OS级别管理路由，也可以使用<code>覆盖网络</code>。</p>
+<p>启动Docker时，会自动创建一个<code>默认的桥接网络</code>（也称为<code>bridge</code>），除非另有说明，否则新启动的容器将连接到它。您还可以创建用户定义的自定义网桥网络。<strong>用户定义的网桥网络优于默认<code>bridge</code> 网络</strong>。</p>
+<h3 id="2-1-用户定义的网桥和默认网桥之间的区别"><a href="#2-1-用户定义的网桥和默认网桥之间的区别" class="headerlink" title="2.1 用户定义的网桥和默认网桥之间的区别"></a>2.1 用户定义的网桥和默认网桥之间的区别</h3><ul>
+<li><p><strong>用户定义的网桥可在容器化应用程序之间提供更好的隔离和互操作性。</strong></p>
+<p>  连接到同一用户定义的<code>网桥网络</code>的容器会自动将所有端口彼此公开，而不会向外界公开任何端口。这使容器化的应用程序可以轻松地彼此通信，而不会意外打开对外界的访问。</p>
+<p>  想象一个具有Web前端和数据库后端的应用程序。外界需要访问Web前端（也许在端口80上），但是只有后端本身需要访问数据库主机和端口。使用用户定义的网桥，只需打开Web端口，并且数据库应用程序不需要打开任何端口，因为Web前端可以通过用户定义的网桥访问它。</p>
 <blockquote>
-<p><strong>服务网格</strong> 是一个<code>基础架构层</code> - 主要是一个代理集合，每个逻辑服务都有一个代理 - 与Docker Swarm或Kubernetes等容器编排解决方案集成，并提供服务发现，负载平衡，断路器，故障注入，安全，监控，跟踪以及更多以非侵入性的方式提供的开箱即用功能。</p>
+<p>如果在默认网桥网络上运行相同的应用程序堆栈，则需要使用-p或–publish 标志分别打开Web端口和数据库端口。这意味着Docker主机需要通过其他方式阻止对数据库端口的访问。</p>
 </blockquote>
-<p>由于服务网格在容器级别运行，它并不关心使用什么技术或编程语言来编写微服务。 你可以将微服务使用Java，C ++，Rust，Go，NodeJS来编写简单HTTP服务器，这些都已不再重要。</p>
-<p>可以将服务网格有效地视为分布式容器化应用基础架构级的面向切面编程。 服务网格中的代理就像AOP中的一个切面。 它们包裹了一个容器化的微服务，就像AspectJ切面可以包裹和测试java方法一样，通过分离横切关注点来简化系统。</p>
-<p>在服务网格中，请求将通过所在基础架构层中的代理在微服务之间路由。正因如此，构成服务网格的各个代理有时也被称为“sidecar”（边车），这是因为它们与每个服务并行运行，而非在内部运行。总之，这些“sidecar”代理（与每项服务分离）构成了网格式网络。</p>
-<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589376166/hexo/sidecar_ce6pve.png" alt="sidecar"></p>
-<p>服务网格是如何实现的呢？它通常会为每个服务实例提供一个称为边车（sidecar）的代理实例。这些边车会处理服务间的通信，监控和安全相关的问题， 以及任何可以从各个服务中抽象出来的东西。这样，开发人员就可以专注于服务中应用程序代码的开发，支持和维护，而运维团队可以负责维护服务网格以及运行应用程序。</p>
-<p><img src="https://res.cloudinary.com/baymax-tips/image/upload/v1589376932/hexo/contrl_plane_kuexpi.png" alt="contrl plane"></p>
-<p>服务网格应用中管理实例之间的网络流量的的部分称为数据平面。另外有一个独立的控制平面负责生成和部署数据平面的配置（这个配置可以控制数据平面的行为）。控制平面通常包含（或被设计为连接到）一个API，命令行界面和用于管理App的图形用户界面。</p>
-<p><strong>Sidecar 设计模式已经越来越受欢迎，并在社区内得到更广泛的采用。构建具有高度可扩展性、弹性、安全性和可观察性的微服务架构具有挑战性。Service Mesh 架构的发展已经改变了游戏规则。它降低了与微服务架构相关的复杂性，并提供了许多功能，如负载平衡、服务发现、流量管理、熔断、遥测、故障注入等。</strong></p>
+</li>
+<li><p><strong>用户定义的网桥可在容器之间提供自动DNS解析。</strong></p>
+<p>  缺省桥接网络上的容器只能通过IP地址相互访问，除非您使用被认为是传统的–link选项。在用户定义的网桥网络上，容器可以通过名称或别名相互解析。</p>
+<p>  想象一下与上一点相同的应用程序，它具有一个Web前端和一个数据库后端。如果调用容器web和db，则db无论应用程序堆栈在哪个Docker主机上运行，Web容器都可以在处连接到db容器。</p>
+<blockquote>
+<p>如果在默认网桥网络上运行相同的应用程序堆栈，则需要在容器之间手动创建链接（使用旧式–link 标志）。这些链接需要双向创建，因此您可以看到，要进行通信的容器超过两个，这将变得很复杂。另外，您可以操纵/etc/hosts容器中的文件，但这会产生难以调试的问题。</p>
+</blockquote>
+</li>
+<li><p><strong>容器可以随时随地从用户定义的网络连接和分离。</strong></p>
+<blockquote>
+<p>在容器的生命周期内，您可以即时将其与用户定义的网络连接或断开连接。要从默认桥接网络中删除容器，您需要停止容器并使用其他网络选项重新创建它。</p>
+</blockquote>
+</li>
+<li><p><strong>每个用户定义的网络都会创建一个可配置的网桥。</strong></p>
+<p>  如果您的容器使用默认桥接网络，则可以对其进行配置，但是所有容器都使用相同的设置，例如MTU和iptables规则。另外，配置默认桥接网络发生在Docker本身之外，并且需要重新启动Docker。</p>
+<blockquote>
+<p>用户定义的桥接网络是使用创建和配置的 docker network create。如果不同的应用程序组具有不同的网络要求，则可以在创建时分别配置每个用户定义的网桥。</p>
+</blockquote>
+</li>
+<li><p><strong>默认网桥网络上的链接容器共享环境变量。</strong></p>
+<p>  最初，在两个容器之间共享环境变量的唯一方法是使用–linkflag链接它们。用户定义的网络无法进行这种类型的变量共享。但是，存在共享环境变量的高级方法。一些想法：</p>
+<pre><code>  - 多个容器可以使用Docker卷挂载包含共享信息的文件或目录。
+
+  - 使用可以一起启动多个容器docker-compose，并且compose文件可以定义共享变量。
+
+  - 您可以使用群体服务代替独立容器，并利用共享的机密和 配置。</code></pre></li>
+</ul>
+<p>连接到同一用户定义网桥网络的容器可以有效地将所有端口彼此公开。为了使容器或不同网络上的非Docker主机可以访问该端口，必须使用或 标志发布该端口。-p–publish</p>
+<h3 id="2-2-管理用户定义的网桥"><a href="#2-2-管理用户定义的网桥" class="headerlink" title="2.2 管理用户定义的网桥"></a>2.2 管理用户定义的网桥</h3><p>使用该docker network create命令创建用户定义的网桥网络。</p>
+<pre class=" language-bash"><code class="language-bash">docker network create my-net</code></pre>
+<p>您可以指定子网，IP地址范围，网关和其他选项。有关详细信息，请参见 docker网络创建 参考或输出docker network create –help。</p>
+<p>使用该docker network rm命令删除用户定义的网桥网络。如果容器当前已连接到网络， 请先断开它们的连接 。</p>
+<pre class=" language-bash"><code class="language-bash">docker network <span class="token function">rm</span> my-net</code></pre>
+<blockquote>
+<p><strong>到底发生了什么事？</strong></p>
+<p>当您创建或删除用户定义的网桥或将容器与用户定义的网桥连接或断开连接时，Docker使用特定于操作系统的工具来管理基础网络基础架构（例如iptables在Linux上添加或删除网桥设备或配置规则） ）。这些细节应视为实施细节。让Docker为您管理用户定义的网络。</p>
+</blockquote>
+<h3 id="2-3-将容器连接到用户定义的网桥"><a href="#2-3-将容器连接到用户定义的网桥" class="headerlink" title="2.3 将容器连接到用户定义的网桥"></a>2.3 将容器连接到用户定义的网桥</h3><p>创建新容器时，可以指定一个或多个–network标志。本示例将Nginx容器连接到my-net网络。它还将容器中的端口80发布到Docker主机上的端口8080，以便外部客户端可以访问该端口。连接到my-net 网络的任何其他容器都可以访问该my-nginx容器上的所有端口，反之亦然。</p>
+<pre class=" language-bash"><code class="language-bash">docker create --name my-nginx \
+  --network my-net \
+  --publish 8080:80 \
+  nginx:latest</code></pre>
+<p>要将运行中的容器连接到现有的用户定义的网桥，请使用以下 docker network connect命令。以下命令将一个已经在运行的my-nginx容器连接 到一个已经存在的my-net网络：</p>
+<pre class=" language-bash"><code class="language-bash">docker network connect my-net my-nginx</code></pre>
+<h3 id="2-4-断开容器与用户定义的网桥的连接"><a href="#2-4-断开容器与用户定义的网桥的连接" class="headerlink" title="2.4 断开容器与用户定义的网桥的连接"></a>2.4 断开容器与用户定义的网桥的连接</h3><p>要将运行中的容器与用户定义的网桥断开连接，请使用以下docker network disconnect命令。以下命令将my-nginx 容器与my-net网络断开连接。</p>
+<pre class=" language-bash"><code class="language-bash">docker network disconnect my-net my-nginx</code></pre>
+<h3 id="2-5-使用IPv6"><a href="#2-5-使用IPv6" class="headerlink" title="2.5 使用IPv6"></a>2.5 使用IPv6</h3><p>如果需要对Docker容器的IPv6支持，则需要 在创建任何IPv6网络或分配容器IPv6地址之前，在Docker守护程序上启用该选项并重新加载其配置。</p>
+<p>创建网络时，可以指定–ipv6标志以启用IPv6。您不能在默认bridge网络上有选择地禁用IPv6支持。</p>
+<h3 id="2-6-启用从Docker容器到外界的转发"><a href="#2-6-启用从Docker容器到外界的转发" class="headerlink" title="2.6 启用从Docker容器到外界的转发"></a>2.6 启用从Docker容器到外界的转发</h3><p>默认情况下，来自连接到默认网桥网络的容器的流量 不会转发到外界。要启用转发，您需要更改两个设置。这些不是Docker命令，它们会影响Docker主机的内核。<br>    1. 配置Linux内核以允许IP转发。</p>
+<pre><code>```bash
+sysctl net.ipv4.conf.all.forwarding=1
+```
+2. 将策略的iptables FORWARD策略从更改DROP为 ACCEPT。
+
+```bash
+sudo iptables -P FORWARD ACCEPT
+```</code></pre><p>这些设置不会在重新启动后持续存在，因此您可能需要将它们添加到启动脚本中。</p>
+<h3 id="2-7-使用默认的桥接网络"><a href="#2-7-使用默认的桥接网络" class="headerlink" title="2.7 使用默认的桥接网络"></a>2.7 使用默认的桥接网络</h3><p>默认bridge网络被认为是Docker的遗留细节，不建议用于生产环境。对其进行配置是手动操作，并且存在 技术缺陷。</p>
+<h4 id="将容器连接到默认网桥网络"><a href="#将容器连接到默认网桥网络" class="headerlink" title="将容器连接到默认网桥网络"></a>将容器连接到默认网桥网络</h4><p>如果未使用该–network标志指定网络，而是指定了网络驱动程序，则默认情况下，容器将连接到默认bridge网络。连接到默认bridge网络的容器只能通过IP地址进行通信，除非它们使用legacy –linkflag进行链接 。</p>
+<h4 id="配置默认网桥网络"><a href="#配置默认网桥网络" class="headerlink" title="配置默认网桥网络"></a>配置默认网桥网络</h4><p>要配置默认bridge网络，请在中指定选项daemon.json。这是daemon.json指定了几个选项的示例。仅指定您需要自定义的设置。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">{</span>
+  <span class="token string">"bip"</span><span class="token keyword">:</span> <span class="token string">"192.168.1.5/24"</span>,
+  <span class="token string">"fixed-cidr"</span><span class="token keyword">:</span> <span class="token string">"192.168.1.5/25"</span>,
+  <span class="token string">"fixed-cidr-v6"</span><span class="token keyword">:</span> <span class="token string">"2001:db8::/64"</span>,
+  <span class="token string">"mtu"</span><span class="token keyword">:</span> 1500,
+  <span class="token string">"default-gateway"</span><span class="token keyword">:</span> <span class="token string">"10.20.1.1"</span>,
+  <span class="token string">"default-gateway-v6"</span><span class="token keyword">:</span> <span class="token string">"2001:db8:abcd::89"</span>,
+  <span class="token string">"dns"</span><span class="token keyword">:</span> <span class="token punctuation">[</span><span class="token string">"10.20.1.2"</span>,<span class="token string">"10.20.1.3"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+<p>重新启动Docker以使更改生效。</p>
+<h4 id="将IPv6与默认桥接网络一起使用"><a href="#将IPv6与默认桥接网络一起使用" class="headerlink" title="将IPv6与默认桥接网络一起使用"></a>将IPv6与默认桥接网络一起使用</h4><p>如果将Docker配置为支持IPv6（请参阅使用IPv6），则还会自动为IPv6配置默认的桥接网络。与用户定义的网桥不同，您不能在默认网桥上有选择地禁用IPv6。</p>
 
             </div>
             <hr/>
@@ -604,7 +627,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://baymax-tips.github.io/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/">http://baymax-tips.github.io/2020/05/12/docker-ru-men-xi-lie-1-docker-jian-jie/</a>
+                    <a href="http://baymax-tips.github.io/2020/05/22/docker-ru-men-xi-lie-4-docker-rong-qi-wang-luo-de-gai-nian-ji-wang-luo-pei-zhi-wang-qiao-wang-luo/">http://baymax-tips.github.io/2020/05/22/docker-ru-men-xi-lie-4-docker-rong-qi-wang-luo-de-gai-nian-ji-wang-luo-pei-zhi-wang-qiao-wang-luo/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -815,31 +838,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/05/13/docker-ru-men-xi-lie-2-docker-he-xin-gai-nian-he-an-zhuang-shi-yong/">
+                <a href="/2020/05/22/docker-ru-men-xi-lie-4-docker-rong-qi-wang-luo-de-gai-nian-ji-wang-luo-pei-zhi-wang-qiao-wang-luo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Docker 入门系列  2. Docker 核心概念和安装使用">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络">
                         
-                        <span class="card-title">Docker 入门系列  2. Docker 核心概念和安装使用</span>
+                        <span class="card-title">Docker入门系列  4. Docker 容器网络的概念及网络配置 网桥网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、 核心概念：镜像、容器与仓库Docker 主要包含三个核心概念，分别是镜像、容器和仓库，理解了这三个概念，就理解了 Docker 的整个生命周期。
-
-镜像： Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源
+                            1. 网络概述&emsp;&emsp;Docker容器和服务如此强大的原因之一是你可以将它们连接在一起，或将它们连接到非Docker工作负载。Docker容器和服务甚至不需要知道它们已部署在Docker上，也不必知道它们的对等对象是否也是D
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -852,6 +874,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -874,31 +897,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/05/09/zai-docker-zhong-yun-xing-openwrt-pang-lu-wang-guan/">
+                <a href="/2020/05/14/docker-ru-men-xi-lie-3-docker-rong-qi-de-shu-ju-guan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="在 Docker 中运行 OpenWrt 旁路网关">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Docker入门系列  3. Docker 容器的数据管理">
                         
-                        <span class="card-title">在 Docker 中运行 OpenWrt 旁路网关</span>
+                        <span class="card-title">Docker入门系列  3. Docker 容器的数据管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在接下来的文章中，我们将在 Docker 容器中运行 OpenWrt，并通过设置，让 Docker 容器中的 OpenWrt 网关接管路由器自身的网关，减轻路由器的负担，同时，由于网关被 OpenWrt 接管，所以 OpenWrt 中的大部
+                            因为容器技术，重新构建并运行应用变得容易且快速，容器化应用基本是无需进一步配置的（已经打包好所有依赖并且已配置），只需PULL，然后Deploy（也许还需要一份docker-compose.yml）就好。我们无需太担心硬件，OS，库以及应用
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="post-category">
-                                    科学上网
+                            <a href="/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/" class="post-category">
+                                    容器服务
                                 </a>
                             
                             
@@ -912,20 +935,8 @@
                         <span class="chip bg-color">Docker</span>
                     </a>
                     
-                    <a href="/tags/openwrt/">
-                        <span class="chip bg-color">openwrt</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%97%81%E8%B7%AF%E7%94%B1/">
-                        <span class="chip bg-color">旁路由</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3/">
-                        <span class="chip bg-color">透明网关</span>
-                    </a>
-                    
-                    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">
-                        <span class="chip bg-color">科学上网</span>
+                    <a href="/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/">
+                        <span class="chip bg-color">容器服务</span>
                     </a>
                     
                 </div>
