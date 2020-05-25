@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://baymax.tips/"/>
-  <updated>2020-05-25T11:29:09.320Z</updated>
+  <updated>2020-05-25T15:03:19.434Z</updated>
   <id>https://baymax.tips/</id>
   
   <author>
@@ -15,6 +15,93 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker入门系列  9. Docker 容器的数据管理  数据卷 绑定挂载 临时挂载</title>
+    <link href="https://baymax.tips/posts/37415.html"/>
+    <id>https://baymax.tips/posts/37415.html</id>
+    <published>2020-05-25T12:22:00.000Z</published>
+    <updated>2020-05-25T15:03:19.434Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;因为容器技术，重新构建并运行应用变得容易且快速，容器化应用基本是无需进一步配置的（已经打包好所有依赖并且已配置），只需PULL，然后Deploy（也许还需要一份docker-compose.yml）就好。我们无需太担心硬件，OS，库以及应用本身的潜在Bug导致应用挂掉，挂掉
+        
+      
+    
+    </summary>
+    
+    
+      <category term="容器服务" scheme="https://baymax.tips/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="https://baymax.tips/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="https://baymax.tips/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker入门系列  8. Docker 容器网络的概念及网络配置 macvlan</title>
+    <link href="https://baymax.tips/posts/38417.html"/>
+    <id>https://baymax.tips/posts/38417.html</id>
+    <published>2020-05-25T11:44:52.000Z</published>
+    <updated>2020-05-25T15:55:27.164Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-使用-macvlan-网络&quot;&gt;&lt;a href=&quot;#1-使用-macvlan-网络&quot; class=&quot;headerlink&quot; title=&quot;1. 使用 macvlan 网络&quot;&gt;&lt;/a&gt;1. 使用 macvlan
+        
+      
+    
+    </summary>
+    
+    
+      <category term="容器服务" scheme="https://baymax.tips/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="https://baymax.tips/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="https://baymax.tips/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker入门系列  7. Docker 容器网络的概念及网络配置 主机网络</title>
+    <link href="https://baymax.tips/posts/42665.html"/>
+    <id>https://baymax.tips/posts/42665.html</id>
+    <published>2020-05-25T11:39:11.000Z</published>
+    <updated>2020-05-25T15:06:09.603Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-使用主机网络&quot;&gt;&lt;a href=&quot;#1-使用主机网络&quot; class=&quot;headerlink&quot; title=&quot;1. 使用主机网络&quot;&gt;&lt;/a&gt;1. 使用主机网络&lt;/h2&gt;&lt;p&gt;如果您使用容器的主机网络模式，那么容器的网络堆栈不会与 Docker
+        
+      
+    
+    </summary>
+    
+    
+      <category term="容器服务" scheme="https://baymax.tips/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="https://baymax.tips/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="https://baymax.tips/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker入门系列  5. Docker 容器网络的概念及网络配置 覆盖网络</title>
@@ -50,7 +137,36 @@
     <link href="https://baymax.tips/posts/27457.html"/>
     <id>https://baymax.tips/posts/27457.html</id>
     <published>2020-05-22T08:25:35.000Z</published>
-    <updated>2020-05-24T12:23:44.457Z</updated>
+    <updated>2020-05-25T14:58:57.949Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-使用网桥网络&quot;&gt;&lt;a href=&quot;#1-使用网桥网络&quot; class=&quot;headerlink&quot; title=&quot;1. 使用网桥网络&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="容器服务" scheme="https://baymax.tips/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="https://baymax.tips/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="https://baymax.tips/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker入门系列  3. Docker 容器网络的概念及网络配置 网络概述</title>
+    <link href="https://baymax.tips/posts/50310.html"/>
+    <id>https://baymax.tips/posts/50310.html</id>
+    <published>2020-05-14T11:45:42.000Z</published>
+    <updated>2020-05-25T15:05:24.775Z</updated>
     
     <summary type="html">
     
@@ -75,40 +191,11 @@
   </entry>
   
   <entry>
-    <title>Docker入门系列  3. Docker 容器的数据管理</title>
-    <link href="https://baymax.tips/posts/38790.html"/>
-    <id>https://baymax.tips/posts/38790.html</id>
-    <published>2020-05-14T13:54:30.000Z</published>
-    <updated>2020-05-24T07:03:16.570Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;因为容器技术，重新构建并运行应用变得容易且快速，容器化应用基本是无需进一步配置的（已经打包好所有依赖并且已配置），只需PULL，然后Deploy（也许还需要一份docker-compose.yml）就好。我们无需太担心硬件，OS，库以及应用本身的潜在Bug导致应用挂掉，挂掉
-        
-      
-    
-    </summary>
-    
-    
-      <category term="容器服务" scheme="https://baymax.tips/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
-    
-    
-      <category term="Docker" scheme="https://baymax.tips/tags/Docker/"/>
-    
-      <category term="容器服务" scheme="https://baymax.tips/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Docker 入门系列  2. Docker 核心概念和安装使用</title>
     <link href="https://baymax.tips/posts/17098.html"/>
     <id>https://baymax.tips/posts/17098.html</id>
     <published>2020-05-13T13:43:34.000Z</published>
-    <updated>2020-05-24T07:02:58.634Z</updated>
+    <updated>2020-05-25T15:05:24.774Z</updated>
     
     <summary type="html">
     
@@ -137,7 +224,7 @@
     <link href="https://baymax.tips/posts/26481.html"/>
     <id>https://baymax.tips/posts/26481.html</id>
     <published>2020-05-12T09:37:53.000Z</published>
-    <updated>2020-05-24T07:02:58.634Z</updated>
+    <updated>2020-05-25T15:05:24.775Z</updated>
     
     <summary type="html">
     
@@ -163,11 +250,11 @@
   </entry>
   
   <entry>
-    <title>在 Docker 中运行 OpenWrt 旁路网关</title>
+    <title>在 Docker 中运行 OpenWrt 旁路网关 透明网关</title>
     <link href="https://baymax.tips/posts/53042.html"/>
     <id>https://baymax.tips/posts/53042.html</id>
     <published>2020-05-09T07:21:51.000Z</published>
-    <updated>2020-05-24T07:02:58.634Z</updated>
+    <updated>2020-05-25T15:05:13.568Z</updated>
     
     <summary type="html">
     
