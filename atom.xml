@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://baymax.tips/"/>
-  <updated>2020-05-25T16:14:08.080Z</updated>
+  <updated>2020-06-03T13:05:17.203Z</updated>
   <id>https://baymax.tips/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker入门系列  10. Docker 镜像的制作 优化 精简</title>
+    <link href="https://baymax.tips/posts/64811.html"/>
+    <id>https://baymax.tips/posts/64811.html</id>
+    <published>2020-05-26T14:19:29.000Z</published>
+    <updated>2020-06-03T13:05:17.203Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-Docker镜像制作&quot;&gt;&lt;a href=&quot;#1-Docker镜像制作&quot; class=&quot;headerlink&quot; title=&quot;1. Docker镜像制作&quot;&gt;&lt;/a&gt;1. Docker镜像制作&lt;/h2&gt;&lt;p&gt;前面几篇文章已经给大家介绍了 Docker
+        
+      
+    
+    </summary>
+    
+    
+      <category term="容器服务" scheme="https://baymax.tips/categories/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="Docker" scheme="https://baymax.tips/tags/Docker/"/>
+    
+      <category term="容器服务" scheme="https://baymax.tips/tags/%E5%AE%B9%E5%99%A8%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker入门系列  9. Docker 容器的数据管理  数据卷 绑定挂载 临时挂载</title>
