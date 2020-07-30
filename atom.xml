@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://baymax.tips/"/>
-  <updated>2020-07-29T08:45:06.117Z</updated>
+  <updated>2020-07-30T07:08:13.337Z</updated>
   <id>https://baymax.tips/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://baymax.tips/posts/23288.html"/>
     <id>https://baymax.tips/posts/23288.html</id>
     <published>2020-05-27T12:30:23.320Z</published>
-    <updated>2020-07-29T08:45:06.117Z</updated>
+    <updated>2020-07-30T07:08:13.337Z</updated>
     
     <summary type="html">
     
@@ -36,6 +36,12 @@
     </summary>
     
     
+      <category term="Flutter" scheme="https://baymax.tips/categories/Flutter/"/>
+    
+    
+      <category term="Flutter" scheme="https://baymax.tips/tags/Flutter/"/>
+    
+      <category term="移动应用" scheme="https://baymax.tips/tags/%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8/"/>
     
   </entry>
   
